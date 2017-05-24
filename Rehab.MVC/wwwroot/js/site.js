@@ -69,7 +69,8 @@ function updateNotes(workoutExerciseId, previousNotes) {
 };
 
 function handleNotesForm(workoutExerciseId, previousNotes) {
-    $("#updateNotesInput").attr("value", previousNotes);
+    //$("#updateNotesInput").attr("value", previousNotes);
+    $("#updateNotesInput").html(previousNotes);
     $("#updateNotesForm").submit(function () {
         $.ajax({
             method: "POST",
