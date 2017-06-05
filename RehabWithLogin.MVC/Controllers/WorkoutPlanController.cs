@@ -22,7 +22,7 @@ namespace RehabWithLogin.MVC.Controllers
 
         public IActionResult Index()
         {
-           var c = _userManager.Users.Select(x => x.Email).First();
+            var c = _userManager.Users.Select(x => x.Email).First();
             ViewBag.Email = c;
             ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(null, null, "WorkoutPlanWorkouts.WorkoutPlan");
             return View(_unitOfWork.WorkoutPlanRepository.Get(null, null, "WorkoutPlanWorkouts.Workout"));
@@ -54,21 +54,36 @@ namespace RehabWithLogin.MVC.Controllers
         [HttpPost]
         public IActionResult AddWorkoutToPlan(int id, int workoutId, string date)
         {
-            var workoutPlan = _unitOfWork.WorkoutPlanRepository.GetById(id);
-            workoutPlan.WorkoutPlanWorkouts = new List<WorkoutPlanWorkout>();
+            if (string.IsNullOrWhiteSpace(date))
+            {
+                ModelState.AddModelError("empty string", "No dates were provided");
+                return RedirectToAction("Index");
+            }
+            var workoutPlan = _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == id, null, "WorkoutPlanWorkouts").First();
             var workout = _unitOfWork.WorkoutRepository.GetById(workoutId);
             var dates = date.Split(',');
 
             foreach (var dateString in dates)
+            {
+
+                var convertedDate = Convert.ToDateTime(dateString);
+                if (workoutPlan.WorkoutPlanWorkouts.Select(x => x.ScheduledTime).Contains(convertedDate))
+                {
+                    ModelState.AddModelError(string.Empty, $"The date {dateString}");
+                }
+
                 workoutPlan.WorkoutPlanWorkouts.Add(new WorkoutPlanWorkout
                 {
                     WorkoutPlan = workoutPlan,
                     Workout = workout,
                     ScheduledTime = Convert.ToDateTime(dateString)
                 });
-
-            _unitOfWork.WorkoutPlanRepository.Update(workoutPlan);
-            _unitOfWork.Save();
+            }
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.WorkoutPlanRepository.Update(workoutPlan);
+                _unitOfWork.Save();
+            }
 
             return RedirectToAction("Index");
         }
@@ -87,14 +102,19 @@ namespace RehabWithLogin.MVC.Controllers
             var dateArray = dates.Split(',');
 
             foreach (var date in dateArray)
+            {
                 workout.WorkoutPlanWorkouts.Add(new WorkoutPlanWorkout
                 {
                     WorkoutPlan = workoutPlan,
                     Workout = workout,
                     ScheduledTime = Convert.ToDateTime(date)
                 });
-            _unitOfWork.WorkoutRepository.Insert(workout);
-            _unitOfWork.Save();
+            }
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.WorkoutRepository.Insert(workout);
+                _unitOfWork.Save();
+            }
 
             return RedirectToAction("Index");
         }
