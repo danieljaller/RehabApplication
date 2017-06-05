@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RehabWithLogin.MVC.Data;
 using RehabWithLogin.MVC.Models;
@@ -10,14 +11,19 @@ namespace RehabWithLogin.MVC.Controllers
     public class WorkoutPlanController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationUser _user;
 
-        public WorkoutPlanController(IUnitOfWork unitOfWork)
+        public WorkoutPlanController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
+           var c = _userManager.Users.Select(x => x.Email).First();
+            ViewBag.Email = c;
             ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(null, null, "WorkoutPlanWorkouts.WorkoutPlan");
             return View(_unitOfWork.WorkoutPlanRepository.Get(null, null, "WorkoutPlanWorkouts.Workout"));
         }

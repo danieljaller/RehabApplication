@@ -5,7 +5,7 @@
 $("#addWPForm").submit(function () {
     $.ajax({
         method: "POST",
-        url: "WorkoutPlan/Create",
+        url: "Bajsa",
         data: $("#addWPForm").serialize()
     }).success(function (msg) {
         $("#addWPForm").hide();

@@ -179,7 +179,7 @@ namespace RehabWithLogin.MVC.Controllers
             if (result.Succeeded)
             {
                 _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
-                return RedirectToLocal(returnUrl);
+                return RedirectToAction("Index", "WorkoutPlan");
             }
             if (result.RequiresTwoFactor)
             {

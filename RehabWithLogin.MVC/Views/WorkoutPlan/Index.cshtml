@@ -69,6 +69,7 @@
 
     <hr/>
     <h1>Daniel's Rehab Application</h1>
+    <h4>Logged in as @ViewBag.Email</h4>
     <hr/>
     <button id="addBtn" class="btn btn-default" data-toggle="modal" data-target="#addWPModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> New workout plan</button>
     <hr/>
@@ -187,7 +188,7 @@
                                 }
                                 <select class="form-control" asp-for="@currentlySelectedIndex" asp-items="@(new SelectList(ViewBag.Workouts, "Id", "Name"))" name="workoutId"></select>
                                 <div class="input-group date">
-                                    <input type="text" class="form-control" name="date" placeholder="Select one or more dates"><span class="input-group-addon">
+                                    <input type="text" class="form-control" readonly name="date" placeholder="Select one or more dates"><span class="input-group-addon">
                                         <i class="fa fa-calendar-o"></i>
                                     </span>
                                 </div>
@@ -203,6 +204,13 @@
     </div>
 
 </div>
+<script>
+    const UrlSettings = {
+        CreateWorkoutPlan: '@Url.Action("Create", "WorkoutPlan")',
+        DeleteWorkoutPlan: '@Url.Action("DeleteWorkoutPlan", "WorkoutPlan")',
+        DeleteWorkoutPlanWorkout: '@Url.Action("DeleteWorkoutPlanWorkout", "WorkoutPlan")'
+    }
+</script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
