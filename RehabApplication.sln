@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rehab.MVC", "Rehab.MVC\Rehab.MVC.csproj", "{CC66A925-F7BD-4BCE-A538-A7F23F9645A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rehab.MVCOld", "Rehab.MVC\Rehab.MVCOld.csproj", "{CC66A925-F7BD-4BCE-A538-A7F23F9645A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RehabWithLogin.MVC", "RehabWithLogin.MVC\RehabWithLogin.MVC.csproj", "{89DFF1AD-7105-4E85-B87E-5EAB5CB96C43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CC66A925-F7BD-4BCE-A538-A7F23F9645A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC66A925-F7BD-4BCE-A538-A7F23F9645A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC66A925-F7BD-4BCE-A538-A7F23F9645A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89DFF1AD-7105-4E85-B87E-5EAB5CB96C43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89DFF1AD-7105-4E85-B87E-5EAB5CB96C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89DFF1AD-7105-4E85-B87E-5EAB5CB96C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89DFF1AD-7105-4E85-B87E-5EAB5CB96C43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
