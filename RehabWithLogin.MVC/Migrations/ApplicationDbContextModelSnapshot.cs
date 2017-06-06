@@ -1,40 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using RehabWithLogin.MVC.Data;
 
-namespace RehabWithLogin.MVC.Data.Migrations
+namespace RehabWithLogin.MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("00000000000000_CreateIdentitySchema")]
-    partial class CreateIdentitySchema
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc3")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
@@ -106,8 +105,6 @@ namespace RehabWithLogin.MVC.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("AspNetUserRoles");
                 });
 
@@ -128,7 +125,8 @@ namespace RehabWithLogin.MVC.Data.Migrations
 
             modelBuilder.Entity("RehabWithLogin.MVC.Models.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
 
@@ -136,7 +134,7 @@ namespace RehabWithLogin.MVC.Data.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
 
@@ -145,10 +143,10 @@ namespace RehabWithLogin.MVC.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
 
@@ -161,7 +159,7 @@ namespace RehabWithLogin.MVC.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -173,6 +171,123 @@ namespace RehabWithLogin.MVC.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.Exercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("ToolId");
+
+                    b.Property<string>("UserEmail");
+
+                    b.Property<string>("VideoUrl");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ToolId");
+
+                    b.ToTable("Exercises");
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.Tool", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("UserEmail");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tools");
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.Workout", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("UserEmail");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Workouts");
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.WorkoutExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ExerciseId");
+
+                    b.Property<string>("Notes");
+
+                    b.Property<int>("Reps");
+
+                    b.Property<string>("Resistance");
+
+                    b.Property<int>("Sets");
+
+                    b.Property<int>("WorkoutId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("WorkoutId");
+
+                    b.ToTable("WorkoutExercises");
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.WorkoutPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("UserEmail");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WorkoutPlans");
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.WorkoutPlanWorkout", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsDone");
+
+                    b.Property<DateTime>("ScheduledTime");
+
+                    b.Property<int>("WorkoutId");
+
+                    b.Property<int>("WorkoutPlanId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkoutPlanId");
+
+                    b.HasIndex("WorkoutId", "WorkoutPlanId", "ScheduledTime")
+                        .IsUnique();
+
+                    b.ToTable("WorkoutPlanWorkouts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -209,6 +324,39 @@ namespace RehabWithLogin.MVC.Data.Migrations
                     b.HasOne("RehabWithLogin.MVC.Models.ApplicationUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.Exercise", b =>
+                {
+                    b.HasOne("RehabWithLogin.MVC.Models.Tool", "Tool")
+                        .WithMany()
+                        .HasForeignKey("ToolId");
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.WorkoutExercise", b =>
+                {
+                    b.HasOne("RehabWithLogin.MVC.Models.Exercise", "Exercise")
+                        .WithMany("WorkoutExercises")
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RehabWithLogin.MVC.Models.Workout", "Workout")
+                        .WithMany("WorkoutExercises")
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("RehabWithLogin.MVC.Models.WorkoutPlanWorkout", b =>
+                {
+                    b.HasOne("RehabWithLogin.MVC.Models.Workout", "Workout")
+                        .WithMany("WorkoutPlanWorkouts")
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("RehabWithLogin.MVC.Models.WorkoutPlan", "WorkoutPlan")
+                        .WithMany("WorkoutPlanWorkouts")
+                        .HasForeignKey("WorkoutPlanId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

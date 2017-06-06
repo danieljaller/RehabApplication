@@ -14,7 +14,8 @@ namespace RehabWithLogin.MVC.Data
             : base(options)
         {
         }
-                public DbSet<Workout> Workouts { get; set; }
+
+        public DbSet<Workout> Workouts { get; set; }
         public DbSet<WorkoutPlan> WorkoutPlans { get; set; }
         public DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
@@ -31,7 +32,7 @@ namespace RehabWithLogin.MVC.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<WorkoutPlanWorkout>().HasIndex(x => new { x.WorkoutId, x.WorkoutPlanId, x.ScheduledTime}).IsUnique(true);
+            modelBuilder.Entity<WorkoutPlanWorkout>().HasIndex(x => new { x.WorkoutId, x.WorkoutPlanId, x.ScheduledTime }).IsUnique(true);
 
             modelBuilder.Entity<WorkoutPlanWorkout>()
                 .HasOne(wpw => wpw.WorkoutPlan)
@@ -43,13 +44,5 @@ namespace RehabWithLogin.MVC.Data
                 .WithMany(w => w.WorkoutPlanWorkouts)
                 .HasForeignKey(wpw => wpw.WorkoutId);
         }
-
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    base.OnModelCreating(builder);
-        //    // Customize the ASP.NET Identity model and override the defaults if needed.
-        //    // For example, you can rename the ASP.NET Identity table names and more.
-        //    // Add your customizations after calling base.OnModelCreating(builder);
-        //}
     }
 }

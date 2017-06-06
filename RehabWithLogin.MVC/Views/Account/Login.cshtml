@@ -11,7 +11,7 @@
 
 <h2>@ViewData["Title"].</h2>
 <div class="row">
-    @*<div class="col-md-8">
+    <div class="col-md-8">
         <section>
             <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
                 <h4>Use a local account to log in.</h4>
@@ -85,8 +85,8 @@
                 }
             }
         </section>
-    </div>*@
-    <div class="col-md-4">
+    </div>
+    @*<div class="col-md-4">
         <section>
             <h4>Use another service to log in.</h4>
             <hr />
@@ -116,7 +116,7 @@
                 }
             }
         </section>
-    </div>
+    </div>*@
 </div>
 
 @section Scripts {

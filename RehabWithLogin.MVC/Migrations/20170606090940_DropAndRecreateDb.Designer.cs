@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using RehabWithLogin.MVC.Data;
 
-namespace RehabWithLogin.MVC.Data.Migrations
+namespace RehabWithLogin.MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170605091100_MigrationFromPreviousProject")]
-    partial class MigrationFromPreviousProject
+    [Migration("20170606090940_DropAndRecreateDb")]
+    partial class DropAndRecreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -185,6 +185,8 @@ namespace RehabWithLogin.MVC.Data.Migrations
 
                     b.Property<int?>("ToolId");
 
+                    b.Property<string>("UserEmail");
+
                     b.Property<string>("VideoUrl");
 
                     b.HasKey("Id");
@@ -201,6 +203,8 @@ namespace RehabWithLogin.MVC.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("UserEmail");
+
                     b.HasKey("Id");
 
                     b.ToTable("Tools");
@@ -214,6 +218,8 @@ namespace RehabWithLogin.MVC.Data.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("UserEmail");
 
                     b.HasKey("Id");
 
@@ -254,6 +260,8 @@ namespace RehabWithLogin.MVC.Data.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("UserEmail");
 
                     b.HasKey("Id");
 

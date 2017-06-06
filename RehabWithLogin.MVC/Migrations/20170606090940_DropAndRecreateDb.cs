@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace RehabWithLogin.MVC.Data.Migrations
+namespace RehabWithLogin.MVC.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class DropAndRecreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +60,50 @@ namespace RehabWithLogin.MVC.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tools",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    UserEmail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tools", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Workouts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    UserEmail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Workouts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkoutPlans",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    UserEmail = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkoutPlans", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -150,10 +192,92 @@ namespace RehabWithLogin.MVC.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Exercises",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    ToolId = table.Column<int>(nullable: true),
+                    UserEmail = table.Column<string>(nullable: true),
+                    VideoUrl = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exercises", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exercises_Tools_ToolId",
+                        column: x => x.ToolId,
+                        principalTable: "Tools",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkoutPlanWorkouts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    IsDone = table.Column<bool>(nullable: false),
+                    ScheduledTime = table.Column<DateTime>(nullable: false),
+                    WorkoutId = table.Column<int>(nullable: false),
+                    WorkoutPlanId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkoutPlanWorkouts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkoutPlanWorkouts_Workouts_WorkoutId",
+                        column: x => x.WorkoutId,
+                        principalTable: "Workouts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WorkoutPlanWorkouts_WorkoutPlans_WorkoutPlanId",
+                        column: x => x.WorkoutPlanId,
+                        principalTable: "WorkoutPlans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkoutExercises",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ExerciseId = table.Column<int>(nullable: false),
+                    Notes = table.Column<string>(nullable: true),
+                    Reps = table.Column<int>(nullable: false),
+                    Resistance = table.Column<string>(nullable: true),
+                    Sets = table.Column<int>(nullable: false),
+                    WorkoutId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkoutExercises", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkoutExercises_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WorkoutExercises_Workouts_WorkoutId",
+                        column: x => x.WorkoutId,
+                        principalTable: "Workouts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
-                column: "NormalizedName");
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -176,11 +300,6 @@ namespace RehabWithLogin.MVC.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -189,6 +308,32 @@ namespace RehabWithLogin.MVC.Data.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exercises_ToolId",
+                table: "Exercises",
+                column: "ToolId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutExercises_ExerciseId",
+                table: "WorkoutExercises",
+                column: "ExerciseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutExercises_WorkoutId",
+                table: "WorkoutExercises",
+                column: "WorkoutId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutPlanWorkouts_WorkoutPlanId",
+                table: "WorkoutPlanWorkouts",
+                column: "WorkoutPlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkoutPlanWorkouts_WorkoutId_WorkoutPlanId_ScheduledTime",
+                table: "WorkoutPlanWorkouts",
+                columns: new[] { "WorkoutId", "WorkoutPlanId", "ScheduledTime" },
                 unique: true);
         }
 
@@ -210,10 +355,28 @@ namespace RehabWithLogin.MVC.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "WorkoutExercises");
+
+            migrationBuilder.DropTable(
+                name: "WorkoutPlanWorkouts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Exercises");
+
+            migrationBuilder.DropTable(
+                name: "Workouts");
+
+            migrationBuilder.DropTable(
+                name: "WorkoutPlans");
+
+            migrationBuilder.DropTable(
+                name: "Tools");
         }
     }
 }

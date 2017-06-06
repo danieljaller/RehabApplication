@@ -41,6 +41,7 @@ namespace RehabWithLogin.MVC.Controllers
             var tool = toolId != null ? _unitOfWork.ToolRepository.GetById(toolId) : new Tool {Name = toolName};
             var exercise = new Exercise
             {
+                UserEmail = User.Identity.Name,
                 Name = name,
                 Description = description,
                 Tool = tool,

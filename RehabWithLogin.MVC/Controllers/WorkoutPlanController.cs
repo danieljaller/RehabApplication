@@ -11,21 +11,19 @@ namespace RehabWithLogin.MVC.Controllers
     public class WorkoutPlanController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ApplicationUser _user;
+        //private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly ApplicationUser _user;
 
-        public WorkoutPlanController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+        public WorkoutPlanController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
+            //_userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            var c = _userManager.Users.Select(x => x.Email).First();
-            ViewBag.Email = c;
             ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(null, null, "WorkoutPlanWorkouts.WorkoutPlan");
-            return View(_unitOfWork.WorkoutPlanRepository.Get(null, null, "WorkoutPlanWorkouts.Workout"));
+            return View(_unitOfWork.WorkoutPlanRepository.Get(x => x.UserEmail == User.Identity.Name, null, "WorkoutPlanWorkouts.Workout"));
         }
 
         [HttpPost]
@@ -35,6 +33,7 @@ namespace RehabWithLogin.MVC.Controllers
             {
                 Name = name,
                 Description = description,
+                UserEmail = User.Identity.Name,
                 WorkoutPlanWorkouts = new List<WorkoutPlanWorkout>()
             };
             _unitOfWork.WorkoutPlanRepository.Insert(workoutPlan);
@@ -93,6 +92,7 @@ namespace RehabWithLogin.MVC.Controllers
         {
             var workout = new Workout
             {
+                UserEmail = User.Identity.Name,
                 Name = name,
                 Description = description,
                 WorkoutPlanWorkouts = new List<WorkoutPlanWorkout>()

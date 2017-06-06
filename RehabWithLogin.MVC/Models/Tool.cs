@@ -7,6 +7,7 @@ namespace RehabWithLogin.MVC.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public string UserEmail { get; set; }
         public string Name { get; set; }
     }
 }
