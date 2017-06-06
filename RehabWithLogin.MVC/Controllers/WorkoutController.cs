@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RehabWithLogin.MVC.Data;
 using RehabWithLogin.MVC.Models;
@@ -15,14 +16,16 @@ namespace RehabWithLogin.MVC.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [Authorize]
         public IActionResult Index(int id)
         {
             var workout = _unitOfWork.WorkoutRepository.Get(x => x.Id == id, null, "WorkoutExercises.Exercise.Tool")
                 .First();
-            ViewBag.Tools = _unitOfWork.ToolRepository.Get();
+            ViewBag.Tools = _unitOfWork.ToolRepository.Get(x => x.UserEmail == User.Identity.Name);
             return View(workout);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult UpdateExerciseNotes(int id, string notes)
         {
@@ -34,6 +37,7 @@ namespace RehabWithLogin.MVC.Controllers
             return RedirectToAction("Index", new {id = workoutExercise.Workout.Id});
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult NewExercise(int workoutId, string name, string description, int? toolId,
             string toolName, string videoUrl, int reps, int sets, string resistance, string notes)
@@ -65,6 +69,7 @@ namespace RehabWithLogin.MVC.Controllers
             return RedirectToAction("Index", new {id = workoutId});
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult UpdateExercise(int workoutExerciseId, int exerciseId, string name, string description,
             int? toolId,
@@ -93,6 +98,7 @@ namespace RehabWithLogin.MVC.Controllers
             return RedirectToAction("Index", new {id = workoutExercise.Workout.Id});
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult DeleteExercise(int workoutExerciseId, int workoutId)
         {

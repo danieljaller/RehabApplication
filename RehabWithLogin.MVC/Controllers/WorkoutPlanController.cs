@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RehabWithLogin.MVC.Data;
@@ -20,12 +21,14 @@ namespace RehabWithLogin.MVC.Controllers
             //_userManager = userManager;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(null, null, "WorkoutPlanWorkouts.WorkoutPlan");
+            ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(x => x.UserEmail == User.Identity.Name, null, "WorkoutPlanWorkouts.WorkoutPlan");
             return View(_unitOfWork.WorkoutPlanRepository.Get(x => x.UserEmail == User.Identity.Name, null, "WorkoutPlanWorkouts.Workout"));
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create(string name, string description)
         {
@@ -42,6 +45,7 @@ namespace RehabWithLogin.MVC.Controllers
             return Content($"Workoutplan {name} was successfully added");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Update(int id, [Bind("Id,Name,Description")] WorkoutPlan workoutPlan)
         {
@@ -50,6 +54,7 @@ namespace RehabWithLogin.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult AddWorkoutToPlan(int id, int workoutId, string date)
         {
@@ -87,6 +92,7 @@ namespace RehabWithLogin.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateWorkout(int workoutPlanId, string name, string description, string dates)
         {
@@ -119,6 +125,7 @@ namespace RehabWithLogin.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult DeleteWorkoutPlan(int workoutPlanId)
         {
@@ -133,6 +140,7 @@ namespace RehabWithLogin.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult DeleteWorkoutPlanWorkout(int workoutPlanWorkoutId)
         {

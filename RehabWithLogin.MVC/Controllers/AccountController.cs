@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RehabWithLogin.MVC.Models;
@@ -51,7 +52,8 @@ namespace RehabWithLogin.MVC.Controllers
             await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            //return View();
+            return ExternalLogin("Google");
         }
 
         //
@@ -141,7 +143,7 @@ namespace RehabWithLogin.MVC.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
