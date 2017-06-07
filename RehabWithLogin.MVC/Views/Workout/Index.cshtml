@@ -13,6 +13,7 @@
     <title>Workout</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -141,7 +142,7 @@
             </div>
         </div>
 
-        <hr />
+        @Html.Partial("_Navigation")
         <h3>@Model.Name</h3>
         <a class="btn btn-default" asp-controller="WorkoutPlan" asp-action="Index"><i class="fa fa-arrow-circle-left"></i> Back to workouts</a>
         <hr />
