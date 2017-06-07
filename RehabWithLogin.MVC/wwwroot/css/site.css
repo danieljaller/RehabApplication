@@ -1,10 +1,16 @@
-﻿.workoutplan-body {
-    margin-top: 200px;
+﻿.workoutplan-header {
+    margin-top: 40px;
+    margin-bottom: 150px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.navbar-header {
+    margin-bottom: 20px;
+}
+.navbar-form {
+    margin-top: 20px;
 }
 
-.workoutplan-header {
-    margin-top: 40px;
-}
 
 #addBtn {
     margin-top: 5px;

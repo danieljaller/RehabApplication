@@ -272,6 +272,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.27.1.878" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
@@ -296,5 +297,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="client_secret.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

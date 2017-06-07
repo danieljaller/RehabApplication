@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RehabWithLogin.MVC.Data;
 using RehabWithLogin.MVC.Models;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
 
 namespace RehabWithLogin.MVC.Controllers
 {

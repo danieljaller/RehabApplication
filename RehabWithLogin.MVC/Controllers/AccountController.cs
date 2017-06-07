@@ -52,8 +52,8 @@ namespace RehabWithLogin.MVC.Controllers
             await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
-            //return View();
-            return ExternalLogin("Google");
+            return View();
+            //return ExternalLogin("Google");
         }
 
         //

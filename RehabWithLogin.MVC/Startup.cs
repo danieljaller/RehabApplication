@@ -101,7 +101,7 @@ namespace RehabWithLogin.MVC
             {
                 routes.MapRoute(
                     "default",
-                    "{controller=Account}/{action=ExternalLoginCallback}/{id?}");
+                    "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }
