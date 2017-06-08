@@ -1,4 +1,7 @@
-﻿@using RehabWithLogin.MVC.Models
+﻿@using System.Collections
+@using System.Runtime.InteropServices.ComTypes
+@using RehabWithLogin.MVC.Controllers
+@using RehabWithLogin.MVC.Models
 @model Workout
 
 @{
@@ -20,35 +23,36 @@
     @Html.Partial("_ExerciseModal")
     @Html.Partial("_DeleteExerciseModal")
     @Html.Partial("_NewExerciseModalForm")
+    @Html.Partial("_AddExistingExerciseToWorkoutModalForm")
 
-    <div class="container">
+<div class="container">
         @Html.Partial("_Navigation")
         <h3>@Model.Name</h3>
         <a class="btn btn-default" asp-controller="WorkoutPlan" asp-action="Index"><i class="fa fa-arrow-circle-left"></i> Back to workouts</a>
         <hr />
         @Html.Partial("_Workouts")
-        <div>
-            <select class="dropdown input-sm">
+        <form role="form" id="addExistingExercise">
+            <select class="dropdown input-sm" id="addExistingExerciseSelect">
                 <option value="default">Add existing exercise</option>
-                @foreach (var workoutExercise in Model.WorkoutExercises)
+                @foreach (var exercise in ViewBag.Exercises)
                 {
-                    <option value="@workoutExercise.Exercise.Id">@workoutExercise.Exercise.Name</option>
+                    <option value="@exercise.Id">@exercise.Name</option>
                 }
             </select>
-            <button class="btn btn-default btn-sm"><i class="fa fa-plus-circle"></i></button>
-        </div>
+            <button type="button" class="btn btn-default btn-sm" id="addExistingExerciseBtn" data-toggle="modal" data-target="#addExistingExerciseModal" onclick="getExerciseInfo($('#addExistingExerciseSelect').val())"><i class="fa fa-plus-circle"> Add exercise</i></button>
+        </form>
         <button class="btn btn-default" data-toggle="modal" data-target="#newExerciseModal"><i class="fa fa-plus-circle"></i> New exercise</button><br />
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/js/site.js">
-    </script>
+    <script src="~/js/site.js"></script>
     <script>
     const UrlSettings = {
         UpdateNotesUrl: '@Url.Action("UpdateExerciseNotes", "Workout")',
         DeleteExerciseUrl: '@Url.Action("DeleteExercise", "Workout")',
-        CreateWorkoutPlan: '@Url.Action("Create", "WorkoutPlan")'
+        CreateWorkoutPlan: '@Url.Action("Create", "WorkoutPlan")',
+        GetExerciseInfo: '@Url.Action("ExerciseInfo", "Workout")'
     }
     </script>
 </body>

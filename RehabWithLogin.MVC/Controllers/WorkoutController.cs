@@ -24,6 +24,7 @@ namespace RehabWithLogin.MVC.Controllers
         [Authorize]
         public IActionResult Index(int id)
         {
+            ViewBag.Exercises = _unitOfWork.ExerciseRepository.Get(x => x.UserEmail == User.Identity.Name);
             var workout = _unitOfWork.WorkoutRepository.Get(x => x.Id == id, null, "WorkoutExercises.Exercise.Tool")
                 .First();
             ViewBag.Tools = _unitOfWork.ToolRepository.Get(x => x.UserEmail == User.Identity.Name);
@@ -111,6 +112,43 @@ namespace RehabWithLogin.MVC.Controllers
             _unitOfWork.Save();
 
             return RedirectToAction("Index", new {id = workoutId});
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult AddExistingExerciseToWorkout(int workoutId, int exerciseId, string notes, int reps, int sets, string resistance)
+        {
+            var workout = _unitOfWork.WorkoutRepository.Get(x => x.Id == workoutId, null, "WorkoutExercises").First();
+            var exercise = _unitOfWork.ExerciseRepository.GetById(exerciseId);
+
+            workout.WorkoutExercises.Add(new WorkoutExercise()
+            {
+                Exercise = exercise,
+                Workout = workout,
+                Notes = notes,
+                Resistance = resistance,
+                Reps = reps,
+                Sets = sets
+            });
+
+            _unitOfWork.WorkoutRepository.Update(workout);
+            _unitOfWork.Save();
+
+            return RedirectToAction("Index", new {id = workoutId});
+        }
+
+        [Authorize]
+        public IActionResult ExerciseInfo(int exerciseId)
+        {
+            var exercise = _unitOfWork.ExerciseRepository.Get(x => x.Id == exerciseId, null, "Tool").First();
+            var exerciseVM = new ExerciseViewModel()
+            {
+                Name = exercise.Name,
+                Tool = exercise.Tool.Name,
+                Description = exercise.Description
+            };
+
+            return Json(exerciseVM);
         }
     }
 }

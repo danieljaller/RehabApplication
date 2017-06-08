@@ -132,3 +132,19 @@ function deleteExerciseFromWorkout(workoutExerciseId, exerciseName, workoutId) {
     });
 };
 
+$("#addExistingExercise").submit(function() {
+    getExerciseInfo($("#addExistingExerciseSelect").val());
+    return false;
+});
+
+function getExerciseInfo(exerciseId) {
+    $.ajax({
+        method: "GET",
+        url: UrlSettings.GetExerciseInfo,
+        data: { 'exerciseId': exerciseId }
+    }).success(function(exercise) {
+        $("#existingExerciseName").html(exercise.name);
+        $("#existingExerciseTool").html(exercise.tool);
+        $("#existingExerciseDescription").html(exercise.description);
+    });
+}
