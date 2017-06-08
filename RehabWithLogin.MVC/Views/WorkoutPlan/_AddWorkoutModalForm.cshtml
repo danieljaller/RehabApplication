@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WorkoutPlan>
+
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    <div class="modal fade" id="addWorkoutModal-@i" tabindex="-1" role="dialog" aria-labelledby="addWorkoutModal-label-@i">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="addWorkoutModal-label-@i">New workout</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" method="post" asp-controller="WorkoutPlan" asp-action="CreateWorkout" asp-route-workoutPlanId="@Model.ElementAt(i).Id">
+                        <div class="form-group">
+                            <label class="control-label" for="nameInput-@i">Name</label>
+                            <input type="text" class="form-control" id="nameInput-@i" name="name" placeholder="Enter name of workout">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="descriptionInput-@i">Description</label>
+                            <input type="text" class="form-control" id="descriptionInput-@i" name="description" placeholder="Enter description for workout">
+                        </div>
+                        <div class="input-group date">
+                            <input type="text" class="form-control" name="dates" placeholder="Select one or more dates"><span class="input-group-addon">
+                                <i class="fa fa-calendar-o"></i>
+                            </span>
+                            <p asp-validation-summary="All"></p>
+                        </div>
+                        <hr />
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+}

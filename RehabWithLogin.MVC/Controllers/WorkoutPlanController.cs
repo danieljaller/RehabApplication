@@ -49,6 +49,7 @@ namespace RehabWithLogin.MVC.Controllers
         [HttpPost]
         public IActionResult Update(int id, [Bind("Id,Name,Description")] WorkoutPlan workoutPlan)
         {
+            workoutPlan.UserEmail = User.Identity.Name;
             _unitOfWork.WorkoutPlanRepository.Update(workoutPlan);
             _unitOfWork.Save();
             return RedirectToAction("Index");
