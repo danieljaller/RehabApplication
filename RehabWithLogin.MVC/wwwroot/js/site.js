@@ -95,9 +95,9 @@ function openDeleteModal(workoutPlanId, workoutPlanName) {
             method: "POST",
             url: UrlSettings.DeleteWorkoutPlan,
             data: { 'workoutPlanId': workoutPlanId }
-        }).success( function(){
-        $("#deleteModal").modal("toggle");
-        reloadWindow();
+        }).success(function () {
+            $("#deleteModal").modal("toggle");
+            reloadWindow();
         });
     });
 };
@@ -106,7 +106,7 @@ function openDeleteModal(workoutPlanId, workoutPlanName) {
 function deleteWorkoutPlanWorkout(workoutPlanWorkoutId, workoutName) {
     $("#deleteModal").modal("show");
     $("#deleteModal").find(".modal-body").html("Are you sure you want to delete " + workoutName + "?");
-    $("#confirmDeleteBtn").click(function() {
+    $("#confirmDeleteBtn").click(function () {
         $.ajax({
             method: "POST",
             url: UrlSettings.DeleteWorkoutPlanWorkout,
@@ -121,7 +121,7 @@ function deleteWorkoutPlanWorkout(workoutPlanWorkoutId, workoutName) {
 function deleteExerciseFromWorkout(workoutExerciseId, exerciseName, workoutId) {
     $("#deleteExerciseModal").modal("show");
     $("#deleteExerciseModal").find(".modal-body").html("Are you sure you want to delete " + exerciseName + " from the workout?");
-    $("#confirmExerciseDeleteBtn").click(function() {
+    $("#confirmExerciseDeleteBtn").click(function () {
         $.ajax({
             method: "POST",
             url: UrlSettings.DeleteExerciseUrl,
@@ -132,7 +132,7 @@ function deleteExerciseFromWorkout(workoutExerciseId, exerciseName, workoutId) {
     });
 };
 
-$("#addExistingExercise").submit(function() {
+$("#addExistingExercise").submit(function () {
     getExerciseInfo($("#addExistingExerciseSelect").val());
     return false;
 });
@@ -142,9 +142,26 @@ function getExerciseInfo(exerciseId) {
         method: "GET",
         url: UrlSettings.GetExerciseInfo,
         data: { 'exerciseId': exerciseId }
-    }).success(function(exercise) {
+    }).success(function (exercise) {
         $("#existingExerciseName").html(exercise.name);
         $("#existingExerciseTool").html(exercise.tool);
         $("#existingExerciseDescription").html(exercise.description);
     });
-}
+};
+
+$("#addExistingExerciseForm").submit(function () {
+    $.ajax({
+        method: "POST",
+        url: UrlSettings.AddExistingExercise,
+        data: {
+            'exerciseId': $("#addExistingExerciseSelect").val(),
+            'workoutId': $("#workoutId").val(),
+            'notes': $("#existingExerciseNotes").val(),
+            'reps': $("#existingExerciseReps").val(),
+            'sets': $("#existingExerciseSets").val(),
+            'resistance': $("#existingExerciseResistance").val()
+        }
+    }).done(function() {
+        reloadWindow();
+    });
+});

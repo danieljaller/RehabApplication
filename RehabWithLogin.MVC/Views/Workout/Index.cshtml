@@ -8,7 +8,6 @@
     Layout = null;
 }
 
-
 <!DOCTYPE html>
 
 <html>
@@ -33,26 +32,30 @@
         @Html.Partial("_Workouts")
         <form role="form" id="addExistingExercise">
             <select class="dropdown input-sm" id="addExistingExerciseSelect">
-                <option value="default">Add existing exercise</option>
+                <option value="0">Add existing exercise</option>
                 @foreach (var exercise in ViewBag.Exercises)
                 {
                     <option value="@exercise.Id">@exercise.Name</option>
                 }
             </select>
+            <input hidden id="workoutId" value="@Model.Id"/>
             <button type="button" class="btn btn-default btn-sm" id="addExistingExerciseBtn" data-toggle="modal" data-target="#addExistingExerciseModal" onclick="getExerciseInfo($('#addExistingExerciseSelect').val())"><i class="fa fa-plus-circle"> Add exercise</i></button>
         </form>
-        <button class="btn btn-default" data-toggle="modal" data-target="#newExerciseModal"><i class="fa fa-plus-circle"></i> New exercise</button><br />
+        <button class="btn btn-default" data-toggle="modal" data-target="#newExerciseModal" id="newExerciseBtn"><i class="fa fa-plus-circle"></i> New exercise</button><br />
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.js"></script>
     <script src="~/js/site.js"></script>
     <script>
     const UrlSettings = {
         UpdateNotesUrl: '@Url.Action("UpdateExerciseNotes", "Workout")',
         DeleteExerciseUrl: '@Url.Action("DeleteExercise", "Workout")',
         CreateWorkoutPlan: '@Url.Action("Create", "WorkoutPlan")',
-        GetExerciseInfo: '@Url.Action("ExerciseInfo", "Workout")'
+        GetExerciseInfo: '@Url.Action("ExerciseInfo", "Workout")',
+        AddExistingExercise: '@Url.Action("AddExistingExerciseToWorkout", "Workout")',
+        GetTools: '@Url.Action("GetTools", "Workout")'
     }
     </script>
 </body>
