@@ -24,7 +24,6 @@ namespace RehabWithLogin.MVC.Controllers
         [Authorize]
         public IActionResult Index(int id)
         {
-            //ViewBag.Exercises = _unitOfWork.ExerciseRepository.Get(x => x.UserEmail == User.Identity.Name);
             var workout = _unitOfWork.WorkoutRepository.Get(x => x.Id == id, null, "WorkoutExercises.Exercise.Tool")
                 .First();
             var workoutVM = new WorkoutViewModel()
@@ -38,7 +37,6 @@ namespace RehabWithLogin.MVC.Controllers
                 Tools = _unitOfWork.ToolRepository.Get(x => x.UserEmail == workout.UserEmail),
                 Exercises = _unitOfWork.ExerciseRepository.Get(x => x.UserEmail == workout.UserEmail)
             };
-            //ViewBag.Tools = _unitOfWork.ToolRepository.Get(x => x.UserEmail == User.Identity.Name);
             return View(workoutVM);
         }
 

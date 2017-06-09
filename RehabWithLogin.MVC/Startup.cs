@@ -91,12 +91,6 @@ namespace RehabWithLogin.MVC
                 ClientSecret = Configuration["Authentication:Google:ClientSecret"]
             });
 
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        "default",
-            //        "{controller=WorkoutPlan}/{action=Index}/{id?}");
-            //});
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

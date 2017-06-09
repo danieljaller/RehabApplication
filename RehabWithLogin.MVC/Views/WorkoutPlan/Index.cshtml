@@ -28,6 +28,7 @@
 
         @Html.Partial("_WorkoutPlans")
         <button id="addBtn" class="btn btn-default" data-toggle="modal" data-target="#addWPModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> New workout plan</button>
+        <a asp-action="GetCalendar", asp-controller="Calendar" method="get" asp-workoutPlanId="2">Calendar</a>
     </div>
     <script>
     const UrlSettings = {
