@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.ViewFeatures
-@model Workout
+@model WorkoutViewModel
 
 
 
@@ -26,7 +26,7 @@
                         <label class="control-label" for="toolSelectList">Select tool</label>
                         <select id="toolSelectList" class="form-control" name="toolId">
                             <option>Select tool</option>
-                            @foreach (var tool in ViewBag.Tools)
+                            @foreach (var tool in Model.Tools)
                             {
                                 <option value="@tool.Id">@tool.Name</option>
                             }

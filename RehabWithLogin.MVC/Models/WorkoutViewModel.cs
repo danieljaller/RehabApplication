@@ -15,5 +15,6 @@ namespace RehabWithLogin.MVC.Models
         public ICollection<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
         public ICollection<WorkoutExercise> WorkoutExercises { get; set; }
         public IEnumerable<Tool> Tools { get; set; }
+        public IEnumerable<Exercise> Exercises { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Workout
+﻿@model WorkoutViewModel
 
 <div class="panel-group" id="collapse" role="tablist" aria-multiselectable="true">
     @for (var i = 0; i < Model.WorkoutExercises.Count; i++)
@@ -24,11 +24,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="toolSelectList-@i">Select tool</label>
-                                @{
-                                    var selectedIndex = 0;
-                                }
-                                <select id="toolSelectList-@i" class="form-control" value="@Model.WorkoutExercises.ElementAt(i).Exercise.Tool" asp-for="@selectedIndex" asp-items="@(new SelectList(ViewBag.Tools, "Id", "Name"))" name="toolId">
-                                    <option></option>
+                                <select id="toolSelectList-@i" class="form-control" name="toolId">
+                                    @foreach (var tool in Model.Tools)
+                                    {
+                                        <option value="@tool.Id">@tool.Name</option>
+                                    }
                                 </select>
                                 <button type="button" class="btn btn-default btn-xs" onclick="$('#newTool-@i').show()"><i class="fa fa-plus"></i> New tool</button>
                             </div>

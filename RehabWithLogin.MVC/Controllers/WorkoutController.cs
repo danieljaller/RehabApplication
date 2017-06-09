@@ -24,11 +24,22 @@ namespace RehabWithLogin.MVC.Controllers
         [Authorize]
         public IActionResult Index(int id)
         {
-            ViewBag.Exercises = _unitOfWork.ExerciseRepository.Get(x => x.UserEmail == User.Identity.Name);
+            //ViewBag.Exercises = _unitOfWork.ExerciseRepository.Get(x => x.UserEmail == User.Identity.Name);
             var workout = _unitOfWork.WorkoutRepository.Get(x => x.Id == id, null, "WorkoutExercises.Exercise.Tool")
                 .First();
-            ViewBag.Tools = _unitOfWork.ToolRepository.Get(x => x.UserEmail == User.Identity.Name);
-            return View(workout);
+            var workoutVM = new WorkoutViewModel()
+            {
+                Id = workout.Id,
+                Name = workout.Name,
+                Description = workout.Description,
+                UserEmail = workout.UserEmail,
+                WorkoutPlanWorkouts = _unitOfWork.WorkoutPlanWorkoutRepository.Get(x => x.WorkoutId == workout.Id).ToList(),
+                WorkoutExercises = workout.WorkoutExercises,
+                Tools = _unitOfWork.ToolRepository.Get(x => x.UserEmail == workout.UserEmail),
+                Exercises = _unitOfWork.ExerciseRepository.Get(x => x.UserEmail == workout.UserEmail)
+            };
+            //ViewBag.Tools = _unitOfWork.ToolRepository.Get(x => x.UserEmail == User.Identity.Name);
+            return View(workoutVM);
         }
 
         [Authorize]
@@ -48,7 +59,7 @@ namespace RehabWithLogin.MVC.Controllers
         public IActionResult NewExercise(int workoutId, string name, string description, int? toolId,
             string toolName, string videoUrl, int reps, int sets, string resistance, string notes)
         {
-            var tool = toolId != null ? _unitOfWork.ToolRepository.GetById(toolId) : new Tool { Name = toolName };
+            var tool = toolId != null ? _unitOfWork.ToolRepository.GetById(toolId) : new Tool { Name = toolName, UserEmail = User.Identity.Name};
             var exercise = new Exercise
             {
                 UserEmail = User.Identity.Name,

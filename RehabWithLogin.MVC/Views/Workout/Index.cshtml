@@ -2,7 +2,7 @@
 @using System.Runtime.InteropServices.ComTypes
 @using RehabWithLogin.MVC.Controllers
 @using RehabWithLogin.MVC.Models
-@model Workout
+@model WorkoutViewModel
 
 @{
     Layout = null;
@@ -33,7 +33,7 @@
         <form role="form" id="addExistingExercise">
             <select class="dropdown input-sm" id="addExistingExerciseSelect">
                 <option value="0">Add existing exercise</option>
-                @foreach (var exercise in ViewBag.Exercises)
+                @foreach (var exercise in Model.Exercises)
                 {
                     <option value="@exercise.Id">@exercise.Name</option>
                 }
@@ -54,8 +54,7 @@
         DeleteExerciseUrl: '@Url.Action("DeleteExercise", "Workout")',
         CreateWorkoutPlan: '@Url.Action("Create", "WorkoutPlan")',
         GetExerciseInfo: '@Url.Action("ExerciseInfo", "Workout")',
-        AddExistingExercise: '@Url.Action("AddExistingExerciseToWorkout", "Workout")',
-        GetTools: '@Url.Action("GetTools", "Workout")'
+        AddExistingExercise: '@Url.Action("AddExistingExerciseToWorkout", "Workout")'
     }
     </script>
 </body>
