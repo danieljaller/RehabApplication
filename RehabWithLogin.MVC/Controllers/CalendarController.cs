@@ -29,7 +29,7 @@ namespace RehabWithLogin.MVC.Controllers
         }
 
         [Authorize]
-        public void GetCalendar(int workoutPlanId)
+        internal CalendarService GetService()
         {
             UserCredential credential;
 
@@ -42,7 +42,7 @@ namespace RehabWithLogin.MVC.Controllers
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.Load(stream).Secrets,
                     scopes,
-                    User.Identity.Name,
+                    "user",
                     CancellationToken.None,
                     new FileDataStore(credPath, true)).Result;
             }
@@ -52,23 +52,45 @@ namespace RehabWithLogin.MVC.Controllers
                 ApplicationName = applicationName
             });
 
-            var calendar = service.Calendars.Get("primary").Execute();
-            EventsResource.ListRequest request = service.Events.List("primary");
-            request.TimeMin = DateTime.Now;
-            request.ShowDeleted = false;
-            request.SingleEvents = true;
-            request.MaxResults = 10;
-            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+            return service;
 
-            // List events.
-            Events events = request.Execute();
+            //var calendar = service.Calendars.Get("primary").Execute();
+            //EventsResource.ListRequest request = service.Events.List("primary");
+            //request.TimeMin = DateTime.Now;
+            //request.ShowDeleted = false;
+            //request.SingleEvents = true;
+            //request.MaxResults = 10;
+            //request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+            //// List events.
+            //Events events = request.Execute();
 
 
-            AddWorkoutPlanToCalendar(2, service);
+            //ExportToGoogleCalendar(2, service);
 
         }
 
-        public void AddWorkoutPlanToCalendar(int workoutPlanId, CalendarService service)
+        [Authorize]
+        [HttpPost]
+        public IActionResult ExportToGoogleCalendar(int workoutPlanId)
+        {
+            var events = CreateCalenderEvents(workoutPlanId);
+
+            var reminderList = GetReminderList();
+
+            var service = GetService();
+
+            foreach (var eventToAdd in events)
+            {
+                eventToAdd.Reminders = new Event.RemindersData();
+                eventToAdd.Reminders.UseDefault = false;
+                eventToAdd.Reminders.Overrides = reminderList;
+                service.Events.Insert(eventToAdd, "primary").Execute();
+            }
+            return RedirectToAction("Index", "WorkoutPlan");
+        }
+
+        private List<Event> CreateCalenderEvents(int workoutPlanId)
         {
             var workoutPlan =
                 _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == workoutPlanId, null, "WorkoutPlanWorkouts.Workout").First();
@@ -91,12 +113,19 @@ namespace RehabWithLogin.MVC.Controllers
                     }
                 });
             }
-            foreach (var eventToAdd in events)
-            {
-                service.Events.Insert(eventToAdd, "primary").Execute();
-            }
 
+            return events;
         }
 
+        private static List<EventReminder> GetReminderList()
+        {
+            var reminder = new EventReminder
+            {
+                Method = "popup",
+                Minutes = 30
+            };
+            var reminderList = new List<EventReminder>() { reminder };
+            return reminderList;
+        }
     }
 }

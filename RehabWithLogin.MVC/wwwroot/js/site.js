@@ -165,3 +165,11 @@ $("#addExistingExerciseForm").submit(function () {
         reloadWindow();
     });
 });
+
+$("#exportCalenderBtn").click(function() {
+    $.ajax({
+        method: "POST",
+        url: "/Calendar/ExportToGoogleCalendar",
+        data: { 'workoutPlanId': $("#wpId").val() }
+    });
+});

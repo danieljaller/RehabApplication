@@ -18,14 +18,14 @@ namespace RehabWithLogin.MVC
 {
     public class Startup
     {
-        string _testSecret = null;
+        //string _testSecret = null;
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
+            
             if (env.IsDevelopment())
             {
                 // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
@@ -49,7 +49,7 @@ namespace RehabWithLogin.MVC
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            _testSecret = Configuration["MySecret"];
+            //_testSecret = Configuration["MySecret"];
 
             services.AddMvc(options =>
             {
