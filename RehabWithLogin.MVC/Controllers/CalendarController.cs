@@ -76,6 +76,9 @@ namespace RehabWithLogin.MVC.Controllers
         {
             var events = CreateCalenderEvents(workoutPlanId);
 
+            if (events == null)
+                return BadRequest();
+
             var reminderList = GetReminderList();
 
             var service = GetService();
@@ -94,6 +97,11 @@ namespace RehabWithLogin.MVC.Controllers
         {
             var workoutPlan =
                 _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == workoutPlanId, null, "WorkoutPlanWorkouts.Workout").First();
+            if (workoutPlan.WorkoutPlanWorkouts == null || workoutPlan.WorkoutPlanWorkouts.Count == 0)
+            {
+                return null;
+            }
+
             var events = new List<Event>();
             foreach (var wpw in workoutPlan.WorkoutPlanWorkouts)
             {

@@ -57,21 +57,28 @@ namespace RehabWithLogin.MVC.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult AddWorkoutToPlan(int id, int workoutId, string date)
+        public IActionResult AddWorkoutToPlan(int id, int workoutId, string date, string time)
         {
             if (string.IsNullOrWhiteSpace(date))
             {
-                ModelState.AddModelError("empty string", "No dates were provided");
+                ModelState.AddModelError(string.Empty, "No dates were provided");
+                return RedirectToAction("Index");
+            }
+            if (string.IsNullOrWhiteSpace(time))
+            {
+                ModelState.AddModelError(string.Empty, "No time was provided");
                 return RedirectToAction("Index");
             }
             var workoutPlan = _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == id, null, "WorkoutPlanWorkouts").First();
             var workout = _unitOfWork.WorkoutRepository.GetById(workoutId);
             var dates = date.Split(',');
 
-            foreach (var dateString in dates)
+            for (var i = 0; i < dates.Length; i++)
             {
-
-                var convertedDate = Convert.ToDateTime(dateString);
+                var dateString = dates[i];
+                dateString += $" {time}";
+                var convertedDate = DateTime.Parse(dateString,
+                    System.Globalization.CultureInfo.InvariantCulture);
                 if (workoutPlan.WorkoutPlanWorkouts.Select(x => x.ScheduledTime).Contains(convertedDate))
                 {
                     ModelState.AddModelError(string.Empty, $"The date {dateString}");

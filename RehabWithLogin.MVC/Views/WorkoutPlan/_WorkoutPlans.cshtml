@@ -10,8 +10,7 @@
                         @Model.ElementAt(i).Name
                     </a>
                     <span class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
-                        <input id="wpId" hidden value="@Model.ElementAt(i).Id" />
-                        <button class="btn btn-default" id="exportCalenderBtn"><i class="fa fa-google-plus" aria-hidden="true"> Export to Google Calendar</i></button>
+                        <button class="btn btn-default" onclick="exportCalendar('@Model.ElementAt(i).Id', '@Model.ElementAt(i).Name')"><i class="fa fa-google-plus" aria-hidden="true"> Export to Google Calendar</i></button>
                         <button class="btn btn-default" data-toggle="modal" data-target="#descriptionModal-@i"><i class="fa fa-info-circle" aria-hidden="true"></i> Description</button>
                         <button class="btn btn-default" data-toggle="modal" data-target="#updateWPModal-@i" id="updateBtn"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit</button>
                         <button class="btn btn-default" id="deleteBtn" onclick="deleteWorkoutPlan('@Model.ElementAt(i).Id', '@Model.ElementAt(i).Name')"><i class="fa fa-trash" aria-hidden="true"> Delete</i></button>
@@ -40,6 +39,7 @@
                                     <i class="fa fa-calendar-o"></i>
                                 </span>
                             </div>
+                            <input class="input-sm" name="time" type="time" placeholder="Enter time"/>
 
                             <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> Add workout to plan</button>
                             <button class="btn btn-default btn-sm" type="button" data-toggle="modal" data-target="#addWorkoutModal-@i"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create new workout</button>

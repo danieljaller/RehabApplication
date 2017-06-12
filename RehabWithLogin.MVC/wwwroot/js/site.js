@@ -166,10 +166,20 @@ $("#addExistingExerciseForm").submit(function () {
     });
 });
 
-$("#exportCalenderBtn").click(function() {
+function exportCalendar(wpId, wpName) {
     $.ajax({
         method: "POST",
         url: "/Calendar/ExportToGoogleCalendar",
-        data: { 'workoutPlanId': $("#wpId").val() }
+        data: { 'workoutPlanId': wpId }
+    }).success(function() {
+        $("#exportConfirmationModal-label").html("Success!");
+        $("#exportConfirmationModal").find(".modal-body")
+            .html(wpName + " was successfully exported to Google Calendar");
+        $("#exportConfirmationModal").modal("show");
+    }).fail(function() {
+        $("#exportConfirmationModal-label").html("Fail!");
+        $("#exportConfirmationModal").find(".modal-body")
+            .html("The workout plan doesn't contain any workouts!");
+        $("#exportConfirmationModal").modal("show");
     });
-});
+};
