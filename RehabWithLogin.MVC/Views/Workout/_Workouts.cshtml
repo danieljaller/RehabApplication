@@ -67,15 +67,15 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel">
             <div class="panel-heading" role="tab" id="collapse-heading-@i">
                 <h4 class="panel-title">
                     <a role="button" data-toggle="collapse" data-parent="#collapse" href="#collapse-@i" aria-expanded="true" aria-controls="collapse-@i">
                         @Model.WorkoutExercises.ElementAt(i).Exercise.Name
                     </a>
                     <span class="btn-group pull-right btn-group-xs" role="group" aria-label="...">
-                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#updateExerciseModal-@i"><i class="fa fa-pencil-square" aria-hidden="true"> Edit</i></button>
-                        <button type="button" class="btn btn-default btn-xs" onclick="deleteExerciseFromWorkout('@Model.WorkoutExercises.ElementAt(i).Id', '@Model.WorkoutExercises.ElementAt(i).Exercise.Name', '@Model.Id')"><i class="fa fa-trash" aria-hidden="true"> Delete</i></button>
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#updateExerciseModal-@i"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit</button>
+                        <button type="button" class="btn btn-default btn-xs" onclick="deleteExerciseFromWorkout('@Model.WorkoutExercises.ElementAt(i).Id', '@Model.WorkoutExercises.ElementAt(i).Exercise.Name', '@Model.Id')"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
                     </span>
                 </h4>
             </div>

@@ -19,7 +19,7 @@
                 </h4>
             </div>
             <div id="collapse-@i" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-heading-@i">
-                <div class="panel-body">
+                <div class="panel-body border-bottom">
                     @foreach (var workoutPlanWorkout in Model.ElementAt(i).WorkoutPlanWorkouts.OrderBy(x => x.ScheduledTime))
                 {
                     <p class="workoutInfo @(@workoutPlanWorkout.IsDone == true ? "line-through" : "")">
@@ -41,7 +41,7 @@
                                     <i class="fa fa-calendar-o"></i>
                                 </span>
                             </div>
-                            <input class="input-sm" required name="time" type="time"/>
+                            <input class="input-sm time" required name="time" type="time"/>
 
                             <button class="btn btn-default btn-sm" type="submit"><i class="fa fa-plus" aria-hidden="true"></i> Add workout to plan</button>
                             <button class="btn btn-default btn-sm" type="button" data-toggle="modal" data-target="#addWorkoutModal-@i"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create new workout</button>
