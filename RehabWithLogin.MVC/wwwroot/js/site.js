@@ -161,7 +161,7 @@ $("#addExistingExerciseForm").submit(function () {
             'sets': $("#existingExerciseSets").val(),
             'resistance': $("#existingExerciseResistance").val()
         }
-    }).done(function() {
+    }).done(function () {
         reloadWindow();
     });
 });
@@ -171,15 +171,40 @@ function exportCalendar(wpId, wpName) {
         method: "POST",
         url: "/Calendar/ExportToGoogleCalendar",
         data: { 'workoutPlanId': wpId }
-    }).success(function() {
+    }).success(function () {
         $("#exportConfirmationModal-label").html("Success!");
         $("#exportConfirmationModal").find(".modal-body")
             .html(wpName + " was successfully exported to Google Calendar");
         $("#exportConfirmationModal").modal("show");
-    }).fail(function() {
+    }).fail(function () {
         $("#exportConfirmationModal-label").html("Fail!");
         $("#exportConfirmationModal").find(".modal-body")
             .html("The workout plan doesn't contain any workouts!");
         $("#exportConfirmationModal").modal("show");
     });
 };
+
+$(".done").on("click", function () {
+    let id = $(this).prev().val();
+    let parent = $(this).parent("p");
+    if (parent.hasClass("line-through")) {
+        $.ajax({
+            method: "PUT",
+            url: "/Workout/ToggleIsDone",
+            data: { 'workoutPlanWorkoutId': id, 'isDone': false }
+        }).done(function () {
+            parent.removeClass("line-through");
+        });
+
+    } else {
+        $.ajax({
+            method: "PUT",
+            url: "/Workout/ToggleIsDone",
+            data: { 'workoutPlanWorkoutId': id, 'isDone': true }
+        }).done(function () {
+            parent.addClass("line-through");
+        });
+    };
+});
+
+

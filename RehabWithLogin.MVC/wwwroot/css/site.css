@@ -1,16 +1,14 @@
 ﻿.workoutplan-header {
     margin-top: 40px;
     margin-bottom: 150px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #808080;
 }
 .navbar-header {
     margin-bottom: 20px;
 }
 .navbar-form {
-    margin-top: 20px;
+    margin-top: 10px;
 }
-
 
 #addBtn {
     margin-top: 5px;
@@ -18,4 +16,48 @@
 
 .bold {
     font-weight: bold;
+}
+
+.panel-heading {
+    /*border-width: 0;
+    background: linear-gradient(to left, #808080, white);*/
+    background-image: url('../images/dust.png');
+    background-repeat: repeat;
+    background-color: #cccccc;
+}
+
+.btn:hover {
+    /*background: linear-gradient(to left, #808080, white);*/
+    border: 1px solid #808080;
+    transition: 0.3s;
+}
+
+
+img.logo {
+    width: 100%;
+    height: auto;
+}
+
+body {
+    background-image: url('../images/dust.png');
+    background-repeat: repeat;
+    background-color: #cccccc;
+}
+
+.btn {
+    background-image: url('../images/dust.png');
+    background-repeat: repeat;
+    background-color: #cccccc;
+    border: 1px solid transparent;
+}
+
+a {
+    color: #808080;
+}
+a:hover {
+    color: black;
+}
+
+.line-through {
+    text-decoration: line-through;
 }

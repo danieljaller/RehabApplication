@@ -163,5 +163,16 @@ namespace RehabWithLogin.MVC.Controllers
             }
             return BadRequest();
         }
+
+        [Authorize]
+        [HttpPut]
+        public IActionResult ToggleIsDone(int workoutPlanWorkoutId, bool isDone)
+        {
+            var workoutPlanWorkout = _unitOfWork.WorkoutPlanWorkoutRepository.GetById(workoutPlanWorkoutId);
+            workoutPlanWorkout.IsDone = isDone;
+            _unitOfWork.WorkoutPlanWorkoutRepository.Update(workoutPlanWorkout);
+            _unitOfWork.Save();
+            return Ok();
+        }
     }
 }

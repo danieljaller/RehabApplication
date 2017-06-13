@@ -1,6 +1,10 @@
 ﻿<nav class="workoutplan-header nav navbar">
-    <h1 class="pull-left navbar-header">Daniel's Rehab Application</h1>
-    <div class="pull-right top-right ">
+    <h1 class="pull-left navbar-header">
+        <a asp-controller="WorkoutPlan" asp-action="Index">
+            <img class="logo" src="~/images/rehab-transparent.png" alt="rehab logo" />
+        </a>
+    </h1>
+    <div class="pull-right top-right">
         <form class="navbar-form" asp-controller="Account" asp-action="Logout" asp-area="" method="post">
             <label for="logoutBtn" class="navbar-text">Logged in as @User.Identity.Name</label>
             <button id="logoutBtn" class="btn btn-default btn-xs pull-right navbar-btn" type="submit">Log out</button>
