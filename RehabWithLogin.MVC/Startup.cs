@@ -77,8 +77,8 @@ namespace RehabWithLogin.MVC
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
             app.UseGoogleAuthentication(new GoogleOptions
             {
-                ClientId = Configuration["Authentication:Google:ClientId"],
-                ClientSecret = Configuration["Authentication:Google:ClientSecret"]
+                ClientId = Configuration["104434752683-nc966kp4jv2lc1b64nl4r7l3mjjah2pj.apps.googleusercontent.com"],
+                ClientSecret = Configuration["Zgge75fk7x91CpYYRaViYSo0"]
             });
 
             app.UseMvc(routes =>
