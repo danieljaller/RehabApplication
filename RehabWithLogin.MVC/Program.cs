@@ -12,6 +12,7 @@ namespace RehabWithLogin.MVC
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseSetting("detailedErrors", "true")
                 .UseApplicationInsights()
                 .Build();
 
