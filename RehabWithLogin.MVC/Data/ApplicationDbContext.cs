@@ -18,12 +18,6 @@ namespace RehabWithLogin.MVC.Data
         public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public DbSet<Tool> Tools { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                "Server = (localdb)\\mssqllocaldb; Database = Rehab; Trusted_Connection = True; ");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
