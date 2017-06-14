@@ -21,15 +21,15 @@
             <div id="collapse-@i" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-heading-@i">
                 <div class="panel-body border-bottom">
                     @foreach (var workoutPlanWorkout in Model.ElementAt(i).WorkoutPlanWorkouts.OrderBy(x => x.ScheduledTime))
-                {
-                    <p class="workoutInfo @(@workoutPlanWorkout.IsDone == true ? "line-through" : "")">
-                        @workoutPlanWorkout.ScheduledTime.ToString("MMMM dd, yyyy") - <a asp-action="Index" asp-controller="Workout" asp-route-id="@workoutPlanWorkout.Workout.Id">@workoutPlanWorkout.Workout.Name</a>
-                        <i class="fa fa-minus-circle" onclick="deleteWorkoutPlanWorkout('@workoutPlanWorkout.Id', '@workoutPlanWorkout.Workout.Name')"></i>
-                        <input hidden value="@workoutPlanWorkout.Id"/>
-                        <i class="fa fa-check done"></i>
-                    </p>
+                    {
+                        <p class="workoutInfo @(workoutPlanWorkout.IsDone ? "line-through" : "")">
+                            @workoutPlanWorkout.ScheduledTime.ToString("MMMM dd, yyyy") - <a asp-action="Index" asp-controller="Workout" asp-route-id="@workoutPlanWorkout.Workout.Id">@workoutPlanWorkout.Workout.Name</a>
+                            <i class="fa fa-minus-circle" onclick="deleteWorkoutPlanWorkout('@workoutPlanWorkout.Id', '@workoutPlanWorkout.Workout.Name')"></i>
+                            <input hidden value="@workoutPlanWorkout.Id"/>
+                            <i class="fa fa-check done"></i>
+                        </p>
                     }
-                    <hr />
+                    <hr/>
                     <form class="form-inline" asp-controller="WorkoutPlan" asp-action="AddWorkoutToPlan" asp-for="Model" asp-route-id="@Model.ElementAt(i).Id">
                         <div class="form-group form-group-sm">
                             @{
@@ -51,5 +51,5 @@
                 </div>
             </div>
         </div>
-                                }
+    }
 </div>

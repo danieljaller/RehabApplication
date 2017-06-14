@@ -10,36 +10,36 @@
 <html>
 <head>
     <title>Workout Plans</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="~/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css" rel="stylesheet"/>
+    <link href="~/css/site.css" rel="stylesheet"/>
 </head>
 <body>
 
-    <div class="container">
-        @Html.Partial("_AddWpModalForm")
-        @Html.Partial("_DeleteWpModal")
-        @Html.Partial("_Navigation")
-        @Html.Partial("_ShowWpDescriptionModal")
-        @Html.Partial("_UpdateWpModalForm")
-        @Html.Partial("_AddWorkoutModalForm")
-        @Html.Partial("_ExportConfirmationModal")
+<div class="container">
+    @Html.Partial("_AddWpModalForm")
+    @Html.Partial("_DeleteWpModal")
+    @Html.Partial("_Navigation")
+    @Html.Partial("_ShowWpDescriptionModal")
+    @Html.Partial("_UpdateWpModalForm")
+    @Html.Partial("_AddWorkoutModalForm")
+    @Html.Partial("_ExportConfirmationModal")
 
-        @Html.Partial("_WorkoutPlans")
-        <button id="addBtn" class="btn btn-default" data-toggle="modal" data-target="#addWPModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> New workout plan</button>
-    </div>
-    <script>
+    @Html.Partial("_WorkoutPlans")
+    <button id="addBtn" class="btn btn-default" data-toggle="modal" data-target="#addWPModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> New workout plan</button>
+</div>
+<script>
     const UrlSettings = {
         CreateWorkoutPlan: '@Url.Action("Create", "WorkoutPlan")',
         DeleteWorkoutPlan: '@Url.Action("DeleteWorkoutPlan", "WorkoutPlan")',
         DeleteWorkoutPlanWorkout: '@Url.Action("DeleteWorkoutPlanWorkout", "WorkoutPlan")'
     }
-    </script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.js"></script>
-    <script src="~/js/site.js"></script>
+</script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.js"></script>
+<script src="~/js/site.js"></script>
 </body>
 </html>

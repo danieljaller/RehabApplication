@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RehabWithLogin.MVC.Models
+﻿namespace RehabWithLogin.MVC.Models
 {
     public class ExerciseViewModel
     {

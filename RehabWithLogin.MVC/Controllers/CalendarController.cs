@@ -3,24 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using RehabWithLogin.MVC.Data;
 
 namespace RehabWithLogin.MVC.Controllers
 {
     public class CalendarController : Controller
     {
-        static string[] scopes = { CalendarService.Scope.Calendar };
-        static string applicationName = "Rehab";
+        private static readonly string[] scopes = {CalendarService.Scope.Calendar};
+        private static readonly string applicationName = "Rehab";
         private readonly IUnitOfWork _unitOfWork;
 
         public CalendarController(IUnitOfWork unitOfWork)
@@ -36,17 +33,18 @@ namespace RehabWithLogin.MVC.Controllers
             using (var stream =
                 new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
             {
-                string credPath = Environment.GetEnvironmentVariable("LocalAppData");
+                var credPath = Environment.GetEnvironmentVariable("LocalAppData");
                 credPath = Path.Combine(credPath, ".credentials/calendar-dotnet-quickstart.json");
 
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
-                    scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
+                        GoogleClientSecrets.Load(stream).Secrets,
+                        scopes,
+                        "user",
+                        CancellationToken.None,
+                        new FileDataStore(credPath, true))
+                    .Result;
             }
-            var service = new CalendarService(new BaseClientService.Initializer()
+            var service = new CalendarService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = credential,
                 ApplicationName = applicationName
@@ -67,7 +65,6 @@ namespace RehabWithLogin.MVC.Controllers
 
 
             //ExportToGoogleCalendar(2, service);
-
         }
 
         [Authorize]
@@ -96,31 +93,28 @@ namespace RehabWithLogin.MVC.Controllers
         private List<Event> CreateCalenderEvents(int workoutPlanId)
         {
             var workoutPlan =
-                _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == workoutPlanId, null, "WorkoutPlanWorkouts.Workout").First();
+                _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == workoutPlanId, null, "WorkoutPlanWorkouts.Workout")
+                    .First();
             if (workoutPlan.WorkoutPlanWorkouts == null || workoutPlan.WorkoutPlanWorkouts.Count == 0)
-            {
                 return null;
-            }
 
             var events = new List<Event>();
             foreach (var wpw in workoutPlan.WorkoutPlanWorkouts)
-            {
                 events.Add(new Event
                 {
                     Summary = wpw.Workout.Name,
                     Location = "",
-                    Start = new EventDateTime()
+                    Start = new EventDateTime
                     {
                         DateTime = wpw.ScheduledTime,
                         TimeZone = "Europe/Stockholm"
                     },
-                    End = new EventDateTime()
+                    End = new EventDateTime
                     {
                         DateTime = wpw.ScheduledTime.AddHours(1),
                         TimeZone = "Europe/Stockholm"
                     }
                 });
-            }
 
             return events;
         }
@@ -132,7 +126,7 @@ namespace RehabWithLogin.MVC.Controllers
                 Method = "popup",
                 Minutes = 30
             };
-            var reminderList = new List<EventReminder>() { reminder };
+            var reminderList = new List<EventReminder> {reminder};
             return reminderList;
         }
     }

@@ -8,6 +8,7 @@ namespace RehabWithLogin.MVC.Models
     {
         [Key]
         public int Id { get; set; }
+
         public WorkoutPlan WorkoutPlan { get; set; }
         public int WorkoutPlanId { get; set; }
         public Workout Workout { get; set; }

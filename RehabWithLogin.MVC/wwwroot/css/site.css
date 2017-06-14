@@ -1,70 +1,62 @@
 ﻿body .btn {
+    background-color: #cccccc;
     background-image: url('../images/dust.png');
     background-repeat: repeat;
-    background-color: #cccccc;
 }
 
 .workoutplan-header {
-    margin-top: 40px;
-    margin-bottom: 150px;
     border-bottom: 1px solid #808080;
+    margin-bottom: 150px;
+    margin-top: 40px;
 }
 
-.navbar-header {
-    margin-bottom: 20px;
-}
+.navbar-header { margin-bottom: 20px; }
 
-.navbar-form {
-    margin-top: 10px;
-}
+.navbar-form { margin-top: 10px; }
 
-#addBtn {
-    margin-top: 5px;
-}
+#addBtn { margin-top: 5px; }
 
-.bold {
-    font-weight: bold;
-}
+.bold { font-weight: bold; }
 
 input {
+    background-color: #cccccc;
     background-image: url('../images/dust.png');
     background-repeat: repeat;
-    background-color: #cccccc;
-}:read-only {
-    background-image: url('../images/dust.png');
-    background-repeat: repeat;
-    background-color: #cccccc;
-    color: black;
-}
-input[type="text"] {
-    background-image: url('../images/dust.png');
-    background-repeat: repeat;
-    background-color: #cccccc;
-}
-.time {
-    border: 1px solid #cccccc;
 }
 
-.panel-heading {
+:read-only {
+    background-color: #cccccc;
     background-image: url('../images/dust.png');
     background-repeat: repeat;
+    color: black;
+}
+
+input[type="text"] {
     background-color: #cccccc;
+    background-image: url('../images/dust.png');
+    background-repeat: repeat;
+}
+
+.time { border: 1px solid #cccccc; }
+
+.panel-heading {
+    background-color: #cccccc;
+    background-image: url('../images/dust.png');
+    background-repeat: repeat;
 }
 
 .panel-body {
+    background-color: #cccccc;
     background-image: url('../images/dust.png');
     background-repeat: repeat;
-    background-color: #cccccc;
 }
 
-.panel-group .panel-heading {
-    border-bottom: 1px solid #cccccc;
-}
+.panel-group .panel-heading { border-bottom: 1px solid #cccccc; }
 
 
 img.logo {
-    width: 100%;
     height: auto;
+    width: 100%;
 }
 
 
@@ -74,45 +66,42 @@ img.logo {
     background-repeat: repeat;
     background-color: #cccccc;*/
     border: 1px solid transparent;
-}.btn:hover {
-     border: 1px solid #808080;
-     transition: 0.3s;
- }
-
-
-a {
-    color: #808080;
 }
-    a:hover {
-        color: black;
-    }
 
-.line-through {
-    text-decoration: line-through;
+.btn:hover {
+    border: 1px solid #808080;
+    transition: 0.3s;
 }
+
+
+a { color: #808080; }
+
+a:hover { color: black; }
+
+.line-through { text-decoration: line-through; }
 
 .login-header {
+    font-size: 2.5rem;
+    left: 48%;
     min-width: 500px;
     position: absolute;
     text-align: center;
     top: 20%;
-    left: 48%;
     transform: translate(-50%, -50%);
-    font-size: 2.5rem
 }
 
 .google-login {
+    color: #808080;
+    font-size: 20pt;
+    left: 50%;
     max-width: 300px;
     position: absolute;
     text-align: center;
     top: 50%;
-    left: 50%;
     transform: translate(-72%, -50%);
-    font-size: 20pt;
-    color: #808080;
 }
 
 .fa-google {
-    font-size: 60pt;
     color: #808080;
+    font-size: 60pt;
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using RehabWithLogin.MVC.Models;
 
@@ -32,7 +28,9 @@ namespace RehabWithLogin.MVC.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<WorkoutPlanWorkout>().HasIndex(x => new { x.WorkoutId, x.WorkoutPlanId, x.ScheduledTime }).IsUnique(true);
+            modelBuilder.Entity<WorkoutPlanWorkout>()
+                .HasIndex(x => new {x.WorkoutId, x.WorkoutPlanId, x.ScheduledTime})
+                .IsUnique(true);
 
             modelBuilder.Entity<WorkoutPlanWorkout>()
                 .HasOne(wpw => wpw.WorkoutPlan)

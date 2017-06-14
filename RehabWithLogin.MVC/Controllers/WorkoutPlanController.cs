@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RehabWithLogin.MVC.Data;
 using RehabWithLogin.MVC.Models;
@@ -24,8 +24,10 @@ namespace RehabWithLogin.MVC.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(x => x.UserEmail == User.Identity.Name, null, "WorkoutPlanWorkouts.WorkoutPlan");
-            return View(_unitOfWork.WorkoutPlanRepository.Get(x => x.UserEmail == User.Identity.Name, null, "WorkoutPlanWorkouts.Workout"));
+            ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(x => x.UserEmail == User.Identity.Name, null,
+                "WorkoutPlanWorkouts.WorkoutPlan");
+            return View(_unitOfWork.WorkoutPlanRepository.Get(x => x.UserEmail == User.Identity.Name, null,
+                "WorkoutPlanWorkouts.Workout"));
         }
 
         [Authorize]
@@ -69,7 +71,8 @@ namespace RehabWithLogin.MVC.Controllers
                 ModelState.AddModelError(string.Empty, "No time was provided");
                 return RedirectToAction("Index");
             }
-            var workoutPlan = _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == id, null, "WorkoutPlanWorkouts").First();
+            var workoutPlan = _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == id, null, "WorkoutPlanWorkouts")
+                .First();
             var workout = _unitOfWork.WorkoutRepository.GetById(workoutId);
             var dates = date.Split(',');
 
@@ -78,11 +81,9 @@ namespace RehabWithLogin.MVC.Controllers
                 var dateString = dates[i];
                 dateString += $" {time}";
                 var convertedDate = DateTime.Parse(dateString,
-                    System.Globalization.CultureInfo.InvariantCulture);
+                    CultureInfo.InvariantCulture);
                 if (workoutPlan.WorkoutPlanWorkouts.Select(x => x.ScheduledTime).Contains(convertedDate))
-                {
                     ModelState.AddModelError(string.Empty, $"The date {dateString}");
-                }
 
                 workoutPlan.WorkoutPlanWorkouts.Add(new WorkoutPlanWorkout
                 {
@@ -116,14 +117,12 @@ namespace RehabWithLogin.MVC.Controllers
             var dateArray = dates.Split(',');
 
             foreach (var date in dateArray)
-            {
                 workout.WorkoutPlanWorkouts.Add(new WorkoutPlanWorkout
                 {
                     WorkoutPlan = workoutPlan,
                     Workout = workout,
                     ScheduledTime = Convert.ToDateTime(date)
                 });
-            }
             if (ModelState.IsValid)
             {
                 _unitOfWork.WorkoutRepository.Insert(workout);
@@ -137,9 +136,9 @@ namespace RehabWithLogin.MVC.Controllers
         [HttpPost]
         public IActionResult DeleteWorkoutPlan(int workoutPlanId)
         {
-
             var workoutPlan =
-                _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == workoutPlanId, null, "WorkoutPlanWorkouts.Workout").First();
+                _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == workoutPlanId, null, "WorkoutPlanWorkouts.Workout")
+                    .First();
             workoutPlan.WorkoutPlanWorkouts.Clear();
             _unitOfWork.WorkoutPlanRepository.Delete(workoutPlan);
             _unitOfWork.Save();

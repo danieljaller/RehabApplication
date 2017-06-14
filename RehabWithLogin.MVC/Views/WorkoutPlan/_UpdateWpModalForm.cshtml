@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<WorkoutPlan>
 
-@for (int i = 0; i < Model.Count(); i++)
+@for (var i = 0; i < Model.Count(); i++)
 {
     <div class="modal fade" id="updateWPModal-@i" tabindex="-1" role="dialog" aria-labelledby="updateWPModal-@i-label">
         <div class="modal-dialog" role="document">
@@ -31,5 +31,5 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 }

@@ -7,7 +7,7 @@ namespace RehabWithLogin.MVC.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
-        
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
