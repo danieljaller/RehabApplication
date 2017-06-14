@@ -2,22 +2,22 @@
     location.reload(true);
 };
 
-$("#addWPForm").submit(function() {
+$("#addWPForm").submit(function () {
     $.ajax({
         method: "POST",
         url: UrlSettings.CreateWorkoutPlan,
         data: $("#addWPForm").serialize()
-    }).success(function(msg) {
+    }).success(function (msg) {
         $("#addWPForm").hide();
         $("#formMessage").html(msg).show();
-        $("#addWPForm").each(function() {
+        $("#addWPForm").each(function () {
             this.reset();
         });
     });
     return false;
 });
 
-$("#closeWPModal").click(function() {
+$("#closeWPModal").click(function () {
     $("#addWPForm").removeData();
     $("#addWPForm").show();
     $("#formMessage").hide();
@@ -49,8 +49,8 @@ function videoModal(url) {
     $("#exerciseModal").find(".modal-title").html("Video");
     $("#videoHtml")
         .html(
-            `<iframe width="560" height="315" src="//www.youtube.com/embed/${videoId
-            }" frameborder="0" allowfullscreen></iframe>`);
+        `<iframe width="560" height="315" src="//www.youtube.com/embed/${videoId
+        }" frameborder="0" allowfullscreen></iframe>`);
     $("#videoHtml").show();
     $("#exerciseModal").modal("show");
 };
@@ -70,13 +70,13 @@ function updateNotes(workoutExerciseId, previousNotes) {
 
 function handleNotesForm(workoutExerciseId, previousNotes) {
     $("#updateNotesInput").html(previousNotes);
-    $("#updateNotesForm").submit(function() {
+    $("#updateNotesForm").submit(function () {
         $.ajax({
             method: "POST",
-            url: UrlSettings.UpdateNotesUrl,
+            url: "/Workout/UpdateExerciseNotes",
             data: { 'id': workoutExerciseId, 'notes': $("#updateNotesInput").val() }
-        }).success(function() {
-            $("#updateNotesForm").each(function() {
+        }).success(function () {
+            $("#updateNotesForm").each(function () {
                 this.reset();
             });
         });
@@ -90,12 +90,12 @@ function deleteWorkoutPlan(workoutPlanId, workoutPlanName) {
 
 function openDeleteModal(workoutPlanId, workoutPlanName) {
     $("#deleteModal").find(".modal-body").html(`Are you sure you want to delete ${workoutPlanName}?`);
-    $("#confirmDeleteBtn").click(function() {
+    $("#confirmDeleteBtn").click(function () {
         $.ajax({
             method: "POST",
             url: UrlSettings.DeleteWorkoutPlan,
             data: { 'workoutPlanId': workoutPlanId }
-        }).success(function() {
+        }).success(function () {
             $("#deleteModal").modal("toggle");
             reloadWindow();
         });
@@ -106,12 +106,12 @@ function openDeleteModal(workoutPlanId, workoutPlanName) {
 function deleteWorkoutPlanWorkout(workoutPlanWorkoutId, workoutName) {
     $("#deleteModal").modal("show");
     $("#deleteModal").find(".modal-body").html(`Are you sure you want to delete ${workoutName}?`);
-    $("#confirmDeleteBtn").click(function() {
+    $("#confirmDeleteBtn").click(function () {
         $.ajax({
             method: "POST",
             url: UrlSettings.DeleteWorkoutPlanWorkout,
             data: { 'workoutPlanWorkoutId': workoutPlanWorkoutId }
-        }).success(function() {
+        }).success(function () {
             $("#deleteModal").modal("toggle");
             reloadWindow();
         });
@@ -122,18 +122,18 @@ function deleteExerciseFromWorkout(workoutExerciseId, exerciseName, workoutId) {
     $("#deleteExerciseModal").modal("show");
     $("#deleteExerciseModal").find(".modal-body")
         .html(`Are you sure you want to delete ${exerciseName} from the workout?`);
-    $("#confirmExerciseDeleteBtn").click(function() {
+    $("#confirmExerciseDeleteBtn").click(function () {
         $.ajax({
             method: "POST",
             url: UrlSettings.DeleteExerciseUrl,
             data: { 'workoutExerciseId': workoutExerciseId, 'workoutId': workoutId }
-        }).success(function() {
+        }).success(function () {
             reloadWindow();
         });
     });
 };
 
-$("#addExistingExercise").submit(function() {
+$("#addExistingExercise").submit(function () {
     getExerciseInfo($("#addExistingExerciseSelect").val());
     return false;
 });
@@ -143,14 +143,14 @@ function getExerciseInfo(exerciseId) {
         method: "GET",
         url: UrlSettings.GetExerciseInfo,
         data: { 'exerciseId': exerciseId }
-    }).success(function(exercise) {
+    }).success(function (exercise) {
         $("#existingExerciseName").html(exercise.name);
         $("#existingExerciseTool").html(exercise.tool);
         $("#existingExerciseDescription").html(exercise.description);
     });
 };
 
-$("#addExistingExerciseForm").submit(function() {
+$("#addExistingExerciseForm").submit(function () {
     $.ajax({
         method: "POST",
         url: UrlSettings.AddExistingExercise,
@@ -162,31 +162,33 @@ $("#addExistingExerciseForm").submit(function() {
             'sets': $("#existingExerciseSets").val(),
             'resistance': $("#existingExerciseResistance").val()
         }
-    }).done(function() {
+    }).done(function () {
         reloadWindow();
     });
 });
 
 function exportCalendar(wpId, wpName) {
+    $("#exportConfirmationModal-label").html("Loading...");
+    $("#exportConfirmationModal").find(".modal-body")
+        .html('<div class="loader">Loading...</div>');
+    $("#exportConfirmationModal").modal("show");
     $.ajax({
         method: "POST",
         url: "/Calendar/ExportToGoogleCalendar",
         data: { 'workoutPlanId': wpId }
-    }).success(function() {
+    }).success(function () {
         $("#exportConfirmationModal-label").html("Success!");
         $("#exportConfirmationModal").find(".modal-body")
             .html(wpName + " was successfully exported to Google Calendar");
-        $("#exportConfirmationModal").modal("show");
-    }).fail(function() {
+    }).fail(function () {
         $("#exportConfirmationModal-label").html("Fail!");
         $("#exportConfirmationModal").find(".modal-body")
             .html("The workout plan doesn't contain any workouts!");
-        $("#exportConfirmationModal").modal("show");
     });
 };
 
 $(".done").on("click",
-    function() {
+    function () {
         const id = $(this).prev().val();
         const parent = $(this).parent("p");
         if (parent.hasClass("line-through")) {
@@ -194,7 +196,7 @@ $(".done").on("click",
                 method: "PUT",
                 url: "/Workout/ToggleIsDone",
                 data: { 'workoutPlanWorkoutId': id, 'isDone': false }
-            }).done(function() {
+            }).done(function () {
                 parent.removeClass("line-through");
             });
 
@@ -203,7 +205,7 @@ $(".done").on("click",
                 method: "PUT",
                 url: "/Workout/ToggleIsDone",
                 data: { 'workoutPlanWorkoutId': id, 'isDone': true }
-            }).done(function() {
+            }).done(function () {
                 parent.addClass("line-through");
             });
         };
