@@ -21,7 +21,7 @@ namespace RehabWithLogin.MVC
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
 
-            if (env.IsDevelopment())
+            //if (env.IsDevelopment())
                 builder.AddUserSecrets<Startup>();
 
             builder.AddEnvironmentVariables();
