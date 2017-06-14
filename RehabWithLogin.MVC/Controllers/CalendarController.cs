@@ -51,20 +51,6 @@ namespace RehabWithLogin.MVC.Controllers
             });
 
             return service;
-
-            //var calendar = service.Calendars.Get("primary").Execute();
-            //EventsResource.ListRequest request = service.Events.List("primary");
-            //request.TimeMin = DateTime.Now;
-            //request.ShowDeleted = false;
-            //request.SingleEvents = true;
-            //request.MaxResults = 10;
-            //request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-
-            //// List events.
-            //Events events = request.Execute();
-
-
-            //ExportToGoogleCalendar(2, service);
         }
 
         [Authorize]
