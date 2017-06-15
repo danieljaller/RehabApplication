@@ -15,7 +15,6 @@
                         <button class="btn btn-default" data-toggle="modal" data-target="#updateWPModal-@i" id="updateBtn"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit</button>
                         <button class="btn btn-default" id="deleteBtn" onclick="deleteWorkoutPlan('@Model.ElementAt(i).Id', '@Model.ElementAt(i).Name')"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
                     </span>
-
                 </h4>
             </div>
             <div id="collapse-@i" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-heading-@i">
@@ -32,10 +31,13 @@
                     <hr/>
                     <form class="form-inline" asp-controller="Workout" asp-action="AddWorkoutToPlan" asp-for="Model" asp-route-id="@Model.ElementAt(i).Id">
                         <div class="form-group form-group-sm">
-                            @{
-                                var currentlySelectedIndex = 0;
-                            }
-                            <select class="form-control" asp-for="@currentlySelectedIndex" asp-items="@(new SelectList(ViewBag.Workouts, "Id", "Name"))" name="workoutId"></select>
+                            <select id="workoutSelectList-@i" class="form-control" name="workoutId">
+                                @foreach (var wpw in Model.ElementAt(i).WorkoutPlanWorkouts)
+                                {
+                                    <option value="@wpw.Workout.Id">@wpw.Workout.Name</option>
+                                }
+                            </select>
+                            
                             <div class="input-group date">
                                 <input type="text" required class="form-control" readonly name="date" placeholder="Select one or more dates"><span class="input-group-addon">
                                     <i class="fa fa-calendar-o"></i>

@@ -66,7 +66,6 @@ namespace RehabWithLogin.MVC.Controllers
             _unitOfWork.WorkoutPlanRepository.Delete(workoutPlan);
             _unitOfWork.Save();
 
-
             return RedirectToAction("Index");
         }
     }

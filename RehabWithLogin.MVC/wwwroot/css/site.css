@@ -18,6 +18,12 @@
 
 .bold { font-weight: bold; }
 
+textarea.form-control {
+    background-color: #cccccc;
+    background-image: url('../images/dust.png');
+    background-repeat: repeat;
+    min-height: 150px;
+}
 input {
     background-color: #cccccc;
     background-image: url('../images/dust.png');
@@ -31,7 +37,14 @@ input {
     color: black;
 }
 
+
 input[type="text"] {
+    background-color: #cccccc;
+    background-image: url('../images/dust.png');
+    background-repeat: repeat;
+}
+
+.form-control {
     background-color: #cccccc;
     background-image: url('../images/dust.png');
     background-repeat: repeat;

@@ -4,17 +4,17 @@
 <div class="modal fade" id="newExerciseModal" tabindex="-1" role="dialog" aria-labelledby="newExerciseModal-label">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="newExerciseModal-label">New exercise</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form" asp-controller="Exercise" asp-action="NewExercise" asp-route-workoutId="@Model.Id" method="post">
+            <form role="form" asp-controller="Exercise" asp-action="NewExercise" asp-route-workoutId="@Model.Id" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="newExerciseModal-label">New exercise</h4>
+                </div>
+                <div class="modal-body">
                     <div class="form-group">
                         <label class="control-label" for="exerciseNameInput">Name</label>
-                        <input type="text" class="form-control" id="exerciseNameInput" name="name">
+                        <input type="text" required class="form-control" id="exerciseNameInput" name="name">
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="exerciseDescriptionInput">Description</label>
@@ -34,7 +34,7 @@
                     <div class="form-group" hidden id="newTool">
                         <label class="control-label" for="exerciseToolInput">Name for new tool</label>
                         <input type="text" class="form-control" id="exerciseToolInput" name="toolName">
-                        <hr/>
+                        <hr />
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="videoUrlInput">Video URL (youtube link only!)</label>
@@ -57,12 +57,12 @@
                         <textarea type="text" class="form-control" id="exerciseNotesInput" name="notes"></textarea>
                     </div>
 
+                </div>
+                <div class="modal-footer">
                     <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
