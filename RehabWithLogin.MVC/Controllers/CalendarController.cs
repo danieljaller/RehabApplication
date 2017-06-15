@@ -16,8 +16,8 @@ namespace RehabWithLogin.MVC.Controllers
 {
     public class CalendarController : Controller
     {
-        private static readonly string[] scopes = {CalendarService.Scope.Calendar};
-        private static readonly string applicationName = "Rehab";
+        private static readonly string[] Scopes = {CalendarService.Scope.Calendar};
+        private static readonly string ApplicationName = "Rehab";
         private readonly IUnitOfWork _unitOfWork;
 
         public CalendarController(IUnitOfWork unitOfWork)
@@ -25,8 +25,7 @@ namespace RehabWithLogin.MVC.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [Authorize]
-        internal CalendarService GetService()
+        private CalendarService GetService()
         {
             UserCredential credential;
 
@@ -38,7 +37,7 @@ namespace RehabWithLogin.MVC.Controllers
 
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                         GoogleClientSecrets.Load(stream).Secrets,
-                        scopes,
+                        Scopes,
                         "user",
                         CancellationToken.None,
                         new FileDataStore(credPath, true))
@@ -47,7 +46,7 @@ namespace RehabWithLogin.MVC.Controllers
             var service = new CalendarService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = credential,
-                ApplicationName = applicationName
+                ApplicationName = ApplicationName
             });
 
             return service;
@@ -68,9 +67,11 @@ namespace RehabWithLogin.MVC.Controllers
 
             foreach (var eventToAdd in events)
             {
-                eventToAdd.Reminders = new Event.RemindersData();
-                eventToAdd.Reminders.UseDefault = false;
-                eventToAdd.Reminders.Overrides = reminderList;
+                eventToAdd.Reminders = new Event.RemindersData
+                {
+                    UseDefault = false,
+                    Overrides = reminderList
+                };
                 service.Events.Insert(eventToAdd, "primary").Execute();
             }
             return RedirectToAction("Index", "WorkoutPlan");
@@ -105,7 +106,7 @@ namespace RehabWithLogin.MVC.Controllers
             return events;
         }
 
-        private static List<EventReminder> GetReminderList()
+        private List<EventReminder> GetReminderList()
         {
             var reminder = new EventReminder
             {
