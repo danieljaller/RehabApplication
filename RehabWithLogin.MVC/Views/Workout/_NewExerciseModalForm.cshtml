@@ -11,7 +11,7 @@
                 <h4 class="modal-title" id="newExerciseModal-label">New exercise</h4>
             </div>
             <div class="modal-body">
-                <form role="form" asp-controller="Workout" asp-action="NewExercise" asp-route-workoutId="@Model.Id" method="post">
+                <form role="form" asp-controller="Exercise" asp-action="NewExercise" asp-route-workoutId="@Model.Id" method="post">
                     <div class="form-group">
                         <label class="control-label" for="exerciseNameInput">Name</label>
                         <input type="text" class="form-control" id="exerciseNameInput" name="name">

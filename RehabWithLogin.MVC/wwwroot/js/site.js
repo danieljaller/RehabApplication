@@ -5,7 +5,7 @@
 $("#addWPForm").submit(function () {
     $.ajax({
         method: "POST",
-        url: UrlSettings.CreateWorkoutPlan,
+        url: "/WorkoutPlan/Create",
         data: $("#addWPForm").serialize()
     }).success(function (msg) {
         $("#addWPForm").hide();
@@ -73,7 +73,7 @@ function handleNotesForm(workoutExerciseId, previousNotes) {
     $("#updateNotesForm").submit(function () {
         $.ajax({
             method: "POST",
-            url: "/Workout/UpdateExerciseNotes",
+            url: "/Exercise/UpdateExerciseNotes",
             data: { 'id': workoutExerciseId, 'notes': $("#updateNotesInput").val() }
         }).success(function () {
             $("#updateNotesForm").each(function () {
@@ -93,7 +93,7 @@ function openDeleteModal(workoutPlanId, workoutPlanName) {
     $("#confirmDeleteBtn").click(function () {
         $.ajax({
             method: "POST",
-            url: UrlSettings.DeleteWorkoutPlan,
+            url: "/WorkoutPlan/DeleteWorkoutPlan",
             data: { 'workoutPlanId': workoutPlanId }
         }).success(function () {
             $("#deleteModal").modal("toggle");
@@ -109,7 +109,7 @@ function deleteWorkoutPlanWorkout(workoutPlanWorkoutId, workoutName) {
     $("#confirmDeleteBtn").click(function () {
         $.ajax({
             method: "POST",
-            url: UrlSettings.DeleteWorkoutPlanWorkout,
+            url: "/Workout/DeleteWorkoutPlanWorkout",
             data: { 'workoutPlanWorkoutId': workoutPlanWorkoutId }
         }).success(function () {
             $("#deleteModal").modal("toggle");
@@ -125,7 +125,7 @@ function deleteExerciseFromWorkout(workoutExerciseId, exerciseName, workoutId) {
     $("#confirmExerciseDeleteBtn").click(function () {
         $.ajax({
             method: "POST",
-            url: UrlSettings.DeleteExerciseUrl,
+            url: "/Exercise/DeleteExercise",
             data: { 'workoutExerciseId': workoutExerciseId, 'workoutId': workoutId }
         }).success(function () {
             reloadWindow();
@@ -141,7 +141,7 @@ $("#addExistingExercise").submit(function () {
 function getExerciseInfo(exerciseId) {
     $.ajax({
         method: "GET",
-        url: UrlSettings.GetExerciseInfo,
+        url: "/Exercise/ExerciseInfo",
         data: { 'exerciseId': exerciseId }
     }).success(function (exercise) {
         $("#existingExerciseName").html(exercise.name);
@@ -153,7 +153,7 @@ function getExerciseInfo(exerciseId) {
 $("#addExistingExerciseForm").submit(function () {
     $.ajax({
         method: "POST",
-        url: UrlSettings.AddExistingExercise,
+        url: "/Exercise/AddExistingExerciseToWorkout",
         data: {
             'exerciseId': $("#addExistingExerciseSelect").val(),
             'workoutId': $("#workoutId").val(),

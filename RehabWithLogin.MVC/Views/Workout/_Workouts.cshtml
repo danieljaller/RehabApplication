@@ -13,7 +13,7 @@
                         <h4 class="modal-title" id="newExerciseModal-label-@i">Update exercise</h4>
                     </div>
                     <div class="modal-body">
-                        <form role="form" asp-controller="Workout" asp-action="UpdateExercise" asp-route-workoutExerciseId="@Model.WorkoutExercises.ElementAt(i).Id" asp-route-exerciseId="@Model.WorkoutExercises.ElementAt(i).Exercise.Id" method="post">
+                        <form role="form" asp-controller="Exercise" asp-action="UpdateExercise" asp-route-workoutExerciseId="@Model.WorkoutExercises.ElementAt(i).Id" asp-route-exerciseId="@Model.WorkoutExercises.ElementAt(i).Exercise.Id" method="post">
                             <div class="form-group">
                                 <label class="control-label" for="exerciseNameInput-@i">Name</label>
                                 <input type="text" value="@Model.WorkoutExercises.ElementAt(i).Exercise.Name" class="form-control" id="exerciseNameInput-@i" name="name">

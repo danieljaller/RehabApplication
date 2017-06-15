@@ -29,13 +29,6 @@
     @Html.Partial("_WorkoutPlans")
     <button id="addBtn" class="btn btn-default" data-toggle="modal" data-target="#addWPModal"><i class="fa fa-plus-circle" aria-hidden="true"></i> New workout plan</button>
 </div>
-<script>
-    const UrlSettings = {
-        CreateWorkoutPlan: '@Url.Action("Create", "WorkoutPlan")',
-        DeleteWorkoutPlan: '@Url.Action("DeleteWorkoutPlan", "WorkoutPlan")',
-        DeleteWorkoutPlanWorkout: '@Url.Action("DeleteWorkoutPlanWorkout", "WorkoutPlan")'
-    }
-</script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -30,7 +30,7 @@
                         </p>
                     }
                     <hr/>
-                    <form class="form-inline" asp-controller="WorkoutPlan" asp-action="AddWorkoutToPlan" asp-for="Model" asp-route-id="@Model.ElementAt(i).Id">
+                    <form class="form-inline" asp-controller="Workout" asp-action="AddWorkoutToPlan" asp-for="Model" asp-route-id="@Model.ElementAt(i).Id">
                         <div class="form-group form-group-sm">
                             @{
                                 var currentlySelectedIndex = 0;
