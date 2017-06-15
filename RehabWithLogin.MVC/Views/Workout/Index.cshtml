@@ -9,40 +9,42 @@
 <html>
 <head>
     <title>Workout</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="~/css/site.css" rel="stylesheet"/>
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
-@Html.Partial("_UpdateNotesModalForm")
-@Html.Partial("_ExerciseModal")
-@Html.Partial("_DeleteExerciseModal")
-@Html.Partial("_NewExerciseModalForm")
-@Html.Partial("_AddExistingExerciseToWorkoutModalForm")
+    @Html.Partial("_UpdateNotesModalForm")
+    @Html.Partial("_ExerciseModal")
+    @Html.Partial("_DeleteExerciseModal")
+    @Html.Partial("_NewExerciseModalForm")
+    @Html.Partial("_AddExistingExerciseToWorkoutModalForm")
 
-<div class="container">
-    @Html.Partial("_Navigation")
-    <h3>@Model.Name</h3>
-    <a class="btn btn-default" asp-controller="WorkoutPlan" asp-action="Index"><i class="fa fa-arrow-circle-left"></i> Back to workouts</a>
-    <hr/>
-    @Html.Partial("_Workouts")
-    <form role="form" id="addExistingExercise">
-        <select class="dropdown input-sm" id="addExistingExerciseSelect">
-            <option value="0">Add existing exercise</option>
-            @foreach (var exercise in Model.Exercises)
+    <div class="container">
+        @Html.Partial("_Navigation")
+        <a class="btn btn-default back-btn" asp-controller="WorkoutPlan" asp-action="Index"><i class="fa fa-arrow-circle-left"></i> Back to workouts</a>
+        <div class="workout-body">
+            <h3 class="workout-name">@Model.Name</h3>
+            <hr />
+            @Html.Partial("_Workouts")
+            <form role="form" id="addExistingExercise">
+                <select class="dropdown input-sm" id="addExistingExerciseSelect">
+                    <option value="0">Add existing exercise</option>
+                    @foreach (var exercise in Model.Exercises)
             {
-                <option value="@exercise.Id">@exercise.Name</option>
-            }
-        </select>
-        <input hidden id="workoutId" value="@Model.Id"/>
-        <button type="button" class="btn btn-default btn-sm" id="addExistingExerciseBtn" data-toggle="modal" data-target="#addExistingExerciseModal" onclick="getExerciseInfo($('#addExistingExerciseSelect').val())"><i class="fa fa-plus-circle"></i> Add exercise</button>
-    </form>
-    <button class="btn btn-default" data-toggle="modal" data-target="#newExerciseModal" id="newExerciseBtn"><i class="fa fa-plus-circle"></i> New exercise</button><br/>
-</div>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="~/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.js"></script>
-<script src="~/js/site.js"></script>
+                        <option value="@exercise.Id">@exercise.Name</option>
+                    }
+                </select>
+                <input hidden id="workoutId" value="@Model.Id" />
+                <button type="button" class="btn btn-default btn-sm" id="addExistingExerciseBtn" data-toggle="modal" data-target="#addExistingExerciseModal" onclick="getExerciseInfo($('#addExistingExerciseSelect').val())"><i class="fa fa-plus-circle"></i> Add exercise</button>
+            </form>
+            <button class="btn btn-default" data-toggle="modal" data-target="#newExerciseModal" id="newExerciseBtn"><i class="fa fa-plus-circle"></i> New exercise</button><br />
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.js"></script>
+    <script src="~/js/site.js"></script>
 </body>
 </html>

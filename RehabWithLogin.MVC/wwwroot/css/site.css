@@ -129,6 +129,18 @@ a:hover { color: black; }
     color: #808080;
 }
 
+.back-btn {
+    margin-top: -270px;
+}
+
+.workout-name {
+    margin-left: 15px;    
+}
+
+.workout-body {
+    margin-top: -80px;
+} 
+
 .loader,
 .loader:before,
 .loader:after {

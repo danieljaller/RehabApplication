@@ -22,7 +22,7 @@
                     @foreach (var workoutPlanWorkout in Model.ElementAt(i).WorkoutPlanWorkouts.OrderBy(x => x.ScheduledTime))
                     {
                         <p class="workoutInfo @(workoutPlanWorkout.IsDone ? "line-through" : "")">
-                            @workoutPlanWorkout.ScheduledTime.ToString("MMMM dd, yyyy") - <a asp-action="Index" asp-controller="Workout" asp-route-id="@workoutPlanWorkout.Workout.Id">@workoutPlanWorkout.Workout.Name</a>
+                            @workoutPlanWorkout.ScheduledTime.ToString("MMMM dd, yyyy") - @workoutPlanWorkout.ScheduledTime.ToString("HH:mm") - <a asp-action="Index" asp-controller="Workout" asp-route-id="@workoutPlanWorkout.Workout.Id">@workoutPlanWorkout.Workout.Name</a>
                             <i class="fa fa-minus-circle" onclick="deleteWorkoutPlanWorkout('@workoutPlanWorkout.Id', '@workoutPlanWorkout.Workout.Name')"></i>
                             <input hidden value="@workoutPlanWorkout.Id"/>
                             <i class="fa fa-check done"></i>
@@ -32,9 +32,9 @@
                     <form class="form-inline" asp-controller="Workout" asp-action="AddWorkoutToPlan" asp-for="Model" asp-route-id="@Model.ElementAt(i).Id">
                         <div class="form-group form-group-sm">
                             <select id="workoutSelectList-@i" class="form-control" name="workoutId">
-                                @foreach (var wpw in Model.ElementAt(i).WorkoutPlanWorkouts)
+                                @foreach (var workout in ViewBag.Workouts)
                                 {
-                                    <option value="@wpw.Workout.Id">@wpw.Workout.Name</option>
+                                    <option value="@workout.Id">@workout.Name</option>
                                 }
                             </select>
                             

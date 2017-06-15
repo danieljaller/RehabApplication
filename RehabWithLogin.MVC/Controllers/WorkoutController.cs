@@ -58,11 +58,7 @@ namespace RehabWithLogin.MVC.Controllers
                 ModelState.AddModelError(string.Empty, "No dates were provided");
                 return RedirectToAction("Index", "WorkoutPlan");
             }
-            if (string.IsNullOrWhiteSpace(time))
-            {
-                ModelState.AddModelError(string.Empty, "No time was provided");
-                return RedirectToAction("Index", "WorkoutPlan");
-            }
+
             var workoutPlan = _unitOfWork.WorkoutPlanRepository.Get(x => x.Id == id, null, "WorkoutPlanWorkouts")
                 .First();
             var workout = _unitOfWork.WorkoutRepository.GetById(workoutId);
@@ -70,18 +66,11 @@ namespace RehabWithLogin.MVC.Controllers
 
             foreach (var day in dates)
             {
-                var dateString = day;
-                dateString += $" {time}";
-                var convertedDate = DateTime.Parse(dateString,
-                    CultureInfo.InvariantCulture);
-                if (workoutPlan.WorkoutPlanWorkouts.Select(x => x.ScheduledTime).Contains(convertedDate))
-                    ModelState.AddModelError(string.Empty, $"The date {dateString}");
-
                 workoutPlan.WorkoutPlanWorkouts.Add(new WorkoutPlanWorkout
                 {
                     WorkoutPlan = workoutPlan,
                     Workout = workout,
-                    ScheduledTime = convertedDate
+                    ScheduledTime = GetDateTime(time, day)
                 });
             }
             if (ModelState.IsValid)
@@ -90,8 +79,9 @@ namespace RehabWithLogin.MVC.Controllers
                 _unitOfWork.Save();
             }
 
-            return RedirectToAction("Index", "WorkoutPlan");
+            return RedirectToAction("Index", "WorkoutPlan", ModelState);
         }
+
 
         [Authorize]
         [HttpPost]
@@ -102,11 +92,7 @@ namespace RehabWithLogin.MVC.Controllers
                 ModelState.AddModelError(string.Empty, "No dates were provided");
                 return RedirectToAction("Index", "WorkoutPlan");
             }
-            if (string.IsNullOrWhiteSpace(time))
-            {
-                ModelState.AddModelError(string.Empty, "No time was provided");
-                return RedirectToAction("Index", "WorkoutPlan");
-            }
+
             var workout = new Workout
             {
                 UserEmail = User.Identity.Name,
@@ -120,15 +106,11 @@ namespace RehabWithLogin.MVC.Controllers
 
             foreach (var date in dateArray)
             {
-                var dateString = date;
-                dateString += $" {time}";
-                var convertedDate = DateTime.Parse(dateString,
-                    CultureInfo.InvariantCulture);
                 workout.WorkoutPlanWorkouts.Add(new WorkoutPlanWorkout
                 {
                     WorkoutPlan = workoutPlan,
                     Workout = workout,
-                    ScheduledTime = convertedDate
+                    ScheduledTime = GetDateTime(time, date)
                 });
             }
             if (ModelState.IsValid)
@@ -147,6 +129,16 @@ namespace RehabWithLogin.MVC.Controllers
             _unitOfWork.WorkoutPlanWorkoutRepository.Delete(workoutPlanWorkoutId);
             _unitOfWork.Save();
             return RedirectToAction("Index", "WorkoutPlan");
+        }
+
+
+        private static DateTime GetDateTime(string time, string date)
+        {
+            var dateString = date;
+            dateString += $" {time}";
+            var convertedDate = DateTime.Parse(dateString,
+                CultureInfo.InvariantCulture);
+            return convertedDate;
         }
     }
 }

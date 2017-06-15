@@ -21,8 +21,7 @@ namespace RehabWithLogin.MVC.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(x => x.UserEmail == User.Identity.Name, null,
-                "WorkoutPlanWorkouts.WorkoutPlan");
+            ViewBag.Workouts = _unitOfWork.WorkoutRepository.Get(x => x.UserEmail == User.Identity.Name);
             return View(_unitOfWork.WorkoutPlanRepository.Get(x => x.UserEmail == User.Identity.Name, null,
                 "WorkoutPlanWorkouts.Workout"));
         }
