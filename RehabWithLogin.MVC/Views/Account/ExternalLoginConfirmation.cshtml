@@ -1,35 +1,43 @@
 ﻿@model ExternalLoginConfirmationViewModel
 @{
     ViewData["Title"] = "Register";
+    Layout = null;
 }
+<head>
+    <title>Register</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1 class="center-block navbar-header login-header">
+        <img class="logo" src="~/images/rehab-transparent.png" alt="rehab logo" />
+    </h1>
 
-<h2>@ViewData["Title"].</h2>
-<h3>Associate your @ViewData["LoginProvider"] account.</h3>
+    <form asp-controller="Account" asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
 
-<form asp-controller="Account" asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-    <h4>Association Form</h4>
-    <hr/>
-    <div asp-validation-summary="All" class="text-danger"></div>
-
-    <p class="text-info">
-        You've successfully authenticated with <strong>@ViewData["LoginProvider"]</strong>.
-        Please enter an email address for this site below and click the Register button to finish
-        logging in.
-    </p>
-    <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="Email" class="form-control"/>
-            <span asp-validation-for="Email" class="text-danger"></span>
+        <div class="google-login small-text">
+            <p class="text-info login-text">
+                You've successfully authenticated with <strong>@ViewData["LoginProvider"]</strong>.
+                Click the Register button to go back to the login screen and sign in with your Google account.
+            </p>
+            <div class="form-group" hidden>
+                <label asp-for="Email" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-default btn-lg register-btn">Register</button>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Register</button>
-        </div>
-    </div>
-</form>
-
-@section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}
+    </form>
+</div>
+    @section Scripts {
+        @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    }
+</body>

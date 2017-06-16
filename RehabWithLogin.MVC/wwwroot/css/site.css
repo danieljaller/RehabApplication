@@ -110,6 +110,29 @@ a:hover { color: black; }
     top: 50%;
     transform: translate(-72%, -50%);
 }
+.small-text {
+    font-size: 12pt;
+    left: 43.5%;
+    max-width: 300px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translate(-72%, -50%);
+}
+
+.left-margin {
+    margin-left: 7px;    
+}
+
+.register-btn {
+    margin-top: 50px;
+    margin-left: 182px;
+}
+
+.login-text {
+    width: 600px;
+    text-align: center;
+} 
 
 .fa-google {
     color: #808080;

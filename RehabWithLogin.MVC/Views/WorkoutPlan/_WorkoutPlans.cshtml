@@ -13,7 +13,7 @@
                         <button class="btn btn-default" onclick="exportCalendar('@Model.ElementAt(i).Id', '@Model.ElementAt(i).Name')"><i class="fa fa-google-plus" aria-hidden="true"></i> Export to Google Calendar</button>
                         <button class="btn btn-default" data-toggle="modal" data-target="#descriptionModal-@i"><i class="fa fa-info-circle" aria-hidden="true"></i> Description</button>
                         <button class="btn btn-default" data-toggle="modal" data-target="#updateWPModal-@i" id="updateBtn"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit</button>
-                        <button class="btn btn-default" id="deleteBtn" onclick="deleteWorkoutPlan('@Model.ElementAt(i).Id', '@Model.ElementAt(i).Name')"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+                        <button class="btn btn-default" id="deleteBtn" onclick="deleteWorkoutPlan('@Model.ElementAt(i).Id', '@Model.ElementAt(i).Name')"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                     </span>
                 </h4>
             </div>
@@ -23,9 +23,9 @@
                     {
                         <p class="workoutInfo @(workoutPlanWorkout.IsDone ? "line-through" : "")">
                             @workoutPlanWorkout.ScheduledTime.ToString("MMMM dd, yyyy") - @workoutPlanWorkout.ScheduledTime.ToString("HH:mm") - <a asp-action="Index" asp-controller="Workout" asp-route-id="@workoutPlanWorkout.Workout.Id">@workoutPlanWorkout.Workout.Name</a>
-                            <i class="fa fa-minus-circle" onclick="deleteWorkoutPlanWorkout('@workoutPlanWorkout.Id', '@workoutPlanWorkout.Workout.Name')"></i>
+                            <i class="fa fa-trash-o left-margin" onclick="deleteWorkoutPlanWorkout('@workoutPlanWorkout.Id', '@workoutPlanWorkout.Workout.Name')"></i>
                             <input hidden value="@workoutPlanWorkout.Id"/>
-                            <i class="fa fa-check done"></i>
+                            <i class="fa fa-check done left-margin"></i>
                         </p>
                     }
                     <hr/>
