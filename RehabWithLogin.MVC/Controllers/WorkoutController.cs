@@ -82,7 +82,6 @@ namespace RehabWithLogin.MVC.Controllers
             return RedirectToAction("Index", "WorkoutPlan", ModelState);
         }
 
-
         [Authorize]
         [HttpPost]
         public IActionResult CreateWorkout(int workoutPlanId, string name, string description, string dates, string time)
@@ -90,7 +89,7 @@ namespace RehabWithLogin.MVC.Controllers
             if (string.IsNullOrWhiteSpace(dates))
             {
                 ModelState.AddModelError(string.Empty, "No dates were provided");
-                return RedirectToAction("Index", "WorkoutPlan");
+                return RedirectToRoute("/WorkoutPlan/Index");
             }
 
             var workout = new Workout

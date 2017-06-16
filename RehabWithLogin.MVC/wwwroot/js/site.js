@@ -7,9 +7,7 @@ $("#addWPForm").submit(function () {
         method: "POST",
         url: "/WorkoutPlan/Create",
         data: $("#addWPForm").serialize()
-    }).success(function (msg) {
-        $("#addWPForm").hide();
-        $("#formMessage").html(msg).show();
+    }).success(function () {
         $("#addWPForm").each(function () {
             this.reset();
         });
