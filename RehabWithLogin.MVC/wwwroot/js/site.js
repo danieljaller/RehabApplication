@@ -14,7 +14,6 @@ $("#addWPForm").submit(function () {
             this.reset();
         });
     });
-    return false;
 });
 
 $("#closeWPModal").click(function () {
